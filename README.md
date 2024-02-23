@@ -7,7 +7,7 @@ Project goals:
  - [x] Then, take this: https://github.com/esp-rs/esp-hal ...
  - [x] ... run `nix-shell`, and compile blinky for esp32s3. 
 
-Project status: **good enough!**
+Project status: **works on my machine!**
 
 # why?
 The recommended installation method using the `espup` tool didn't work for me.
