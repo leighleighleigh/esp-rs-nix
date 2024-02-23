@@ -9,6 +9,10 @@ Project goals:
 
 Project status: **good enough!**
 
+# why?
+The recommended installation method using the `espup` tool didn't work for me.
+
 # notes
+ - This is for development of `no_std`, `esp-hal`-based applications only. NOT for use with `esp-hal-idf`.
  - This is hard-coded to download binaries for `x86_64` only, at the moment.
  - PRs welcome!
