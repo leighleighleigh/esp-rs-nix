@@ -9,7 +9,9 @@ pkgs.stdenv.mkDerivation rec {
     name = "esp-rs";
     version = "1.76.0.1";
 
+    nativeBuildInputs = with pkgs; [ autoPatchelfHook zlib pkg-config gcc stdenv.cc.cc ];
     buildInputs = [ esp-rust-build esp-xtensa-gcc ];
+    autoPatchelfIgnoreMissingDeps = [ "*" ];
 
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz";
@@ -33,5 +35,7 @@ pkgs.stdenv.mkDerivation rec {
 
     # install onto it!
     ./install.sh --destdir=$out --prefix="" --disable-ldconfig
+
+    runHook postInstall
     '';
 }
