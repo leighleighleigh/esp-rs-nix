@@ -1,13 +1,16 @@
-{ pkgs ? import <nixpkgs> {}}:
+{ 
+  pkgs ? import <nixpkgs> {},
+  archname ? "x86_64-unknown-linux-gnu"
+}:
 let
 in
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rust-build";
-    version = "1.76.0.1";
+    version = "1.79.0.0";
 
     src = pkgs.fetchzip {
-            url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-x86_64-unknown-linux-gnu.tar.xz";
-            sha256 = "sha256-HoBlsE4GE9bK1naAZ3BeG/LrB25QyLM3eEkMibS8tuw=";
+            url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${archname}.tar.xz";
+            sha256 = "sha256-kAmxc9s3uUlV/kV0ESHOxPay2c8MnudJiKtQQsDrnTg=";
           };
 
     patchPhase = '' 
