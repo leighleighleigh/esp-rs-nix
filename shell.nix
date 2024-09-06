@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {}}:
 let 
-    esp-rs = pkgs.callPackage ./esp-rs/default.nix {};
+    esp-rs = pkgs.callPackage ./esp-rs-nix/default.nix {};
 in
 pkgs.mkShell rec {
     name = "esp-rs-nix";
