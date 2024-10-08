@@ -11,7 +11,7 @@ in
 # of the esp-rs and xtensa-gcc files.
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rs";
-    version = "1.79.0.0";
+    version = "1.81.0.0";
 
     nativeBuildInputs = with pkgs; [ autoPatchelfHook zlib pkg-config gcc stdenv.cc.cc ];
     buildInputs = [ esp-rust-build esp-xtensa-gcc esp-riscv32-gcc ];
@@ -19,7 +19,7 @@ pkgs.stdenv.mkDerivation rec {
 
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz";
-            sha256 = "sha256-ORQbixqeIZPOIdQczDC3KBhphJ2vu56iPeRZQMknk7I=";
+            hash = "sha256-pUcU9uM7KKrjgBuNkq278D/QYHleNoPM/agLpKPd9/k=";
           };
 
     patchPhase = '' 
