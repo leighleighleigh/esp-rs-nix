@@ -19,7 +19,7 @@ pkgs.stdenv.mkDerivation rec {
 
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz";
-            hash = "sha256-pUcU9uM7KKrjgBuNkq278D/QYHleNoPM/agLpKPd9/k=";
+            hash = "sha256-74Jv+a/sJfZpemhvLzBow/jQ92Ag8nRjSknZZ3hEpA4=";
           };
 
     patchPhase = '' 
