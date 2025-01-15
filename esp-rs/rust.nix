@@ -6,7 +6,7 @@ let
 in
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rust-build";
-    version = "1.81.0.0";
+    version = "1.84.0.0";
 
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${archname}.tar.xz";

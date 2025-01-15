@@ -11,7 +11,7 @@ in
 # of the esp-rs and xtensa-gcc files.
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rs";
-    version = "1.81.0.0";
+    version = "1.84.0.0";
 
     nativeBuildInputs = with pkgs; [ autoPatchelfHook zlib pkg-config gcc stdenv.cc.cc ];
     buildInputs = [ esp-rust-build esp-xtensa-gcc esp-riscv32-gcc ];
