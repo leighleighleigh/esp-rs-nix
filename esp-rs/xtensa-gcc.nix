@@ -6,7 +6,7 @@ let
 in
 pkgs.stdenv.mkDerivation rec {
     name = "esp-xtensa-gcc";
-    version = "14.2.0_20240906";
+    version = "14.2.0_20241119";
 
     src = pkgs.fetchzip {
             url = "https://github.com/espressif/crosstool-NG/releases/download/esp-${version}/xtensa-esp-elf-${version}-${archname}.tar.xz";
