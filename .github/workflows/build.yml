@@ -1,0 +1,19 @@
+name: build flake
+
+on:
+  workflow_dispatch: # allows manual triggering
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: |
+          nix-shell
+                
