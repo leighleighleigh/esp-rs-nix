@@ -10,7 +10,7 @@ pkgs.stdenv.mkDerivation rec {
 
     src = pkgs.fetchzip {
             url = "https://github.com/espressif/crosstool-NG/releases/download/esp-${version}/riscv32-esp-elf-${version}-${archname}.tar.xz";
-            hash = "sha256-xSAtR0dnEW8xW/93eO4t9YgXREqo/R4PreXnalGQusM=";
+            hash = "sha256-67O34FYUnVG2nfkfQj2yH874qDSYx4F/16xxPi0kNbY=";
           };
 
     outputs = [ "out" ];

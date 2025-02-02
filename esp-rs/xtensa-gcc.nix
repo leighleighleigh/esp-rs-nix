@@ -10,7 +10,7 @@ pkgs.stdenv.mkDerivation rec {
 
     src = pkgs.fetchzip {
             url = "https://github.com/espressif/crosstool-NG/releases/download/esp-${version}/xtensa-esp-elf-${version}-${archname}.tar.xz";
-            hash = "sha256-uZ8md2PJQhIsJAHO7hK9+Hn8mPI/erhFpW22w/fS3+g=";
+            hash = "sha256-pX2KCnUoGZtgqFmZEuNRJxDMQgqYYPRpswL3f3T0nWE=";
           };
 
     outputs = [ "out" ];
