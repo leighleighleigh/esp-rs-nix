@@ -1,46 +1,44 @@
 { pkgs ? import <nixpkgs> {}}:
 let 
-    esp-rs = pkgs.callPackage ./esp-rs/default.nix {};
+    # Uses this folder as the source for esp-rs-nix (in-repo nix-shell)
+    esp-rs-src = pkgs.lib.sources.cleanSource ./.;
+
+    # Examples for out-of-repo nix-shell usage below.
+    #
+    # # Use the latest release of esp-rs-nix
+    # esp-rs-src = builtins.fetchTarball "https://github.com/leighleighleigh/esp-rs-nix/archive/master.tar.gz";
+    #
+    # # Use a pinned release of esp-rs-nix, at commit '0c3fa7245d38019e60c4ae56b2e98465c1b8a5dc'
+    # esp-rs-src = pkgs.fetchFromGitHub {
+    #   owner = "leighleighleigh";
+    #   repo = "esp-rs-nix";
+    #   rev = "0c3fa7245d38019e60c4ae56b2e98465c1b8a5dc";
+    #   hash = "sha256-b5kb6gxqutHySWEoweNfKbZw1r7DkwqRC39RWsyFSLU=";
+    # };
+    
+    # Call the package from wherever the source was obtained
+    esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {};
 in
 pkgs.mkShell rec {
     name = "esp-rs-nix";
-
-    buildInputs = [ esp-rs pkgs.rustup pkgs.espflash pkgs.rust-analyzer pkgs.pkg-config pkgs.stdenv.cc pkgs.bacon pkgs.systemdMinimal ];
+    
+    # You may wish to change these build inputs for your application
+    buildInputs = [
+        esp-rs
+        pkgs.rustup
+        pkgs.espflash
+        pkgs.rust-analyzer
+        pkgs.pkg-config
+        pkgs.stdenv.cc
+        pkgs.systemdMinimal
+    ];
 
     shellHook = ''
+    # Add a prefix 'esp-rs' to the shell prompt
     export PS1="(esp-rs)$PS1"
-    # this is important - it tells rustup where to find the esp toolchain,
+
+    # This variable is important - it tells rustup where to find the esp toolchain,
     # without needing to copy it into your local ~/.rustup/ folder.
     export RUSTUP_TOOLCHAIN=${esp-rs}
     '';
 }
-#let
-#  rustOverlay = builtins.fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz";
-#  pkgs = import <nixpkgs> {
-#    overlays = [ (import rustOverlay) ];
-#  };
-#
-#  rust = pkgs.rust-bin.nightly.latest.default.override {
-#    extensions = [
-#      "rust-src" # for rust-analyzer
-#    ];
-#  };
-#in
-#  pkgs.mkShell rec {
-#    buildInputs = [ rust ] ++ (with pkgs; [
-#      bacon
-#      gcc
-#      pkg-config
-#      rust-analyzer
-#      stdenv.cc
-#      mdsh
-#    ]);
-#
-#    LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
-#
-#    shellHook = ''
-#        export PS1="''${debian_chroot:+($debian_chroot)}\[\033[01;39m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
-#        export PS1="(nix-rs)$PS1"
-#        export LD_LIBRARY_PATH="''${LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}"
-#    '';
-#  }

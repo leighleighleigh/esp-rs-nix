@@ -1,4 +1,4 @@
-name: build flake
+name: test `nix-shell`
 
 on:
   workflow_dispatch: # allows manual triggering
