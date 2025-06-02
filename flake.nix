@@ -13,10 +13,12 @@
       system: let
         pkgs = import nixpkgs {inherit system;};
         shell = pkgs.callPackage ./shell.nix {};
+        esp-rs-src = pkgs.lib.sources.cleanSource ./.;
       in {
         package = rec {
           inherit shell;
           default = shell;
+          esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {};
         };
         devShells.default = shell;
       }
