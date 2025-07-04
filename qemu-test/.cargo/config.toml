@@ -1,0 +1,20 @@
+[build]
+rustflags = [
+  # LLD
+  "-C", "linker=rust-lld",
+  "-C", "link-arg=-Tlinkall.x",
+  # Required to obtain backtraces (e.g. when using the "esp-backtrace" crate.)
+  # NOTE: May negatively impact performance of produced code
+  "-C", "force-frame-pointers",
+  # Work around https://github.com/NixOS/nixpkgs/issues/281527 by forcing LLD as the linker:
+  #   >   = note: x86_64-unknown-linux-gnu-gcc: error: unrecognized command-line option '-flavor'
+  #   >           x86_64-unknown-linux-gnu-gcc: error: unrecognized command-line option '--as-needed'; did you mean '-mno-needed'?
+  #   >           x86_64-unknown-linux-gnu-gcc: error: unrecognized command-line option '--gc-sections'; did you mean '--data-sections'?
+  #   >
+]
+
+target = "xtensa-esp32s3-none-elf"
+
+[unstable]
+build-std = ["core"]
+
