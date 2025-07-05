@@ -1,0 +1,43 @@
+[package]
+edition = "2021"
+name = "qemu-test-esp-rs-nix"
+version = "0.1.0"
+
+[[bin]]
+path = "src/main.rs"
+name = "app"
+test = false
+bench = false
+
+[dependencies]
+esp-bootloader-esp-idf = "0.1.0"
+esp-hal = { version = "1.0.0-beta.1", features = ["esp32s3", "unstable"] }
+critical-section = "1.2.0"
+esp-println = { version = "0.14.0", features = [
+    "esp32s3",
+    "auto",
+], default-features = false }
+esp-backtrace = { version = "0.16.0", features = [
+    "esp32s3",
+    "panic-handler",
+    "exception-handler",
+    "println",
+] }
+embassy-executor = { version = "0.7.0", features = ["task-arena-size-20480"] }
+embassy-time = "0.4.0"
+esp-hal-embassy = { version = "0.8.1", features = ["esp32s3"] }
+static_cell = { version = "2.1.0", features = ["nightly"] }
+
+[profile.dev]
+# Rust debug is too slow.
+# For debug builds always builds with some optimization
+opt-level = "s"
+
+[profile.release]
+codegen-units = 1        # LLVM can perform better optimizations using a single thread
+debug = 2
+debug-assertions = false
+incremental = false
+lto = 'fat'
+opt-level = 's'
+overflow-checks = false

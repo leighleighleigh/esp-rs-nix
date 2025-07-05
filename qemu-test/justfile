@@ -1,0 +1,34 @@
+conf := "just.toml"
+chip := shell('toml get -r $1 chip',conf)
+qemu := shell('toml get -r $1 $2.qemu',conf,chip)
+arch := shell('toml get -r $1 $2.arch',conf,chip)
+
+elf := justfile_directory() / "target/" + arch + "/release/app"  # The build result from cargo
+app := justfile_directory() / "target" / "app.bin" # Where will the final firmware binary be saved?
+flash_size := "4mb" # The binary will be padded to be this size, which is required by QEMU
+
+default:
+  @just --list --unsorted
+
+# Build the rust application, and save it as a binary firmware image.
+build: apply-just-config
+  #!/usr/bin/env bash
+  cargo build --release --target {{arch}} && \
+  espflash save-image --chip {{chip}} --flash-size {{flash_size}} --merge {{elf}} {{app}}
+
+# Run the binary firmware image using QEMU
+run: apply-just-config
+  #!/usr/bin/env bash
+  test -f {{app}} || exit 1
+  echo "Ctrl-A X to Exit!" >&2
+  {{qemu}} -nographic -serial mon:stdio -machine {{chip}} -m 4 -drive file={{app}},if=mtd,format=raw
+
+# Replaces target/arch strings in Cargo.toml and .cargo/config.toml,
+# in response to the 'chip' setting in the base 'just.toml'
+[private]
+apply-just-config:
+  #!/usr/bin/env bash
+  echo "{{chip}}"
+  sed -i -E 's/"esp32\w+"/"{{chip}}"/g' Cargo.toml
+  sed -i -E 's/^(target = ").*"/\1{{arch}}"/g' .cargo/config.toml
+
