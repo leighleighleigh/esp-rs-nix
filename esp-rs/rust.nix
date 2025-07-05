@@ -6,11 +6,12 @@ let
 in
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rust-build";
-    version = "1.87.0.0";
-
+    version = "1.88.0.0";
+  
+    # Binary build of espressif rustc
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${archname}.tar.xz";
-            hash = "sha256-Aaclpx+GP0ME/RMXoH8P7GZDOxT2tmVH2FR9wCqvvak=";
+            hash = "sha256-rVASQiHRC+sJvi9rdVsO8IO0fAZKKGFqRzmSoR5faj0=";
           };
 
     patchPhase = '' 
@@ -40,6 +41,6 @@ pkgs.stdenv.mkDerivation rec {
 
     installPhase = ''
     mkdir -p $out
-    ./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs
+    ./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs 
     '';
 }

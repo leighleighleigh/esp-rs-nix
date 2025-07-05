@@ -11,15 +11,16 @@ in
 # of the esp-rs and xtensa-gcc files.
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rs";
-    version = "1.87.0.0";
+    version = "1.88.0.0";
 
     nativeBuildInputs = with pkgs; [ autoPatchelfHook zlib pkg-config gcc stdenv.cc.cc ];
     buildInputs = [ esp-rust-build esp-xtensa-gcc esp-riscv32-gcc ];
     autoPatchelfIgnoreMissingDeps = [ "*" ];
-
+    
+    # The rust-src component from espressif rustc
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz";
-            hash = "sha256-Aaclpx+GP0ME/RMXoH8P7GZDOxT2tmVH2FR9wCqvvak=";
+            hash = "sha256-zWuLI2+q0rO9ANFZOEwLHbvaO+ZANI/MJpj/JBrhxiQ=";
           };
 
     patchPhase = '' 

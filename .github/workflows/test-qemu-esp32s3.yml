@@ -1,0 +1,20 @@
+name: test QEMU esp32s3 crate within `nix-shell`
+
+on:
+  workflow_dispatch: # allows manual triggering
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: |
+          cd qemu-test && \
+          nix-shell --run 'just build && timeout 10 just run'
+                
