@@ -1,12 +1,14 @@
 # This variable will select between the sections below.
 # You can use this to automatically swap the project between architectures.
 # (A naive sed-replacement is used to convert all the rust config files, based on this setting)
-chip = "esp32s3"
+chip = "esp32c3"
 
 [esp32s3]
 qemu = "qemu-system-xtensa"
 arch = "xtensa-esp32s3-none-elf"
+gdb = "xtensa-esp-elf-gdb"
 
 [esp32c3]
 qemu = "qemu-system-riscv32"
 arch = "riscv32imc-unknown-none-elf"
+gdb = "riscv32-esp-elf-gdb"

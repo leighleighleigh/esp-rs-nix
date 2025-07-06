@@ -6,6 +6,7 @@ let
     esp-rust-build = pkgs.callPackage ./rust.nix {};
     esp-xtensa-gcc = pkgs.callPackage ./xtensa-gcc.nix {};
     esp-riscv32-gcc = pkgs.callPackage ./riscv32-gcc.nix {};
+    esp-riscv32-gdb = pkgs.callPackage ./riscv32-gdb.nix {};
 in
 # this package is actually the 'rust-src' part of the esp-rs release - it's installed last, over the top
 # of the esp-rs and xtensa-gcc files.
@@ -38,6 +39,8 @@ pkgs.stdenv.mkDerivation rec {
     cp -r ${esp-xtensa-gcc}/* $out
     chmod -R u+rw $out
     cp -r ${esp-riscv32-gcc}/* $out
+    chmod -R u+rw $out
+    cp -r ${esp-riscv32-gdb}/* $out
     chmod -R u+rw $out
 
     # install onto it!

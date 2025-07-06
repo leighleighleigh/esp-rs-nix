@@ -18,16 +18,23 @@ async fn main(spawner: Spawner) {
     let config = esp_hal::Config::default().with_cpu_clock(CpuClock::max());
     let peripherals = esp_hal::init(config);
 
-    println!("Hello QEMU from embassy!");
 
     let timer0 = SystemTimer::new(peripherals.SYSTIMER);
     esp_hal_embassy::init(timer0.alarm0);
 
-    //// TODO: Spawn some tasks
-    //let _ = spawner;
+    println!("Hello QEMU from embassy!");
 
-    //loop {
-    //    Timer::after(Duration::from_secs(1)).await;
-    //    println!("Loop time: {}", Instant::now());
-    //}
+    let mut t0 = Instant::now();
+    let mut t1 = Instant::now();
+
+    loop {
+        println!("Loop time: {}", Instant::now());
+        loop {
+          t1 = Instant::now();
+          if (t1 - t0).as_millis() >= 1 {
+            break;
+          }
+        }
+        //Timer::after(Duration::from_millis(1000)).await;
+    }
 }

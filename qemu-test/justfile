@@ -1,11 +1,18 @@
 conf := "just.toml"
 chip := shell('toml get -r $1 chip',conf)
-qemu := shell('toml get -r $1 $2.qemu',conf,chip)
 arch := shell('toml get -r $1 $2.arch',conf,chip)
+qemu := shell('toml get -r $1 $2.qemu',conf,chip)
+gdb := shell('toml get -r $1 $2.gdb',conf,chip)
 
 elf := justfile_directory() / "target/" + arch + "/release/app"  # The build result from cargo
 app := justfile_directory() / "target" / "app.bin" # Where will the final firmware binary be saved?
 flash_size := "4mb" # The binary will be padded to be this size, which is required by QEMU
+
+# icount 3 is required to simuilate a 125 MHz chip
+#qemu_args := "-icount 3 -nographic -machine " + chip + " -m 2 -drive file=" + app + ",if=mtd,format=raw"
+#qemu_args := "-icount shift=3,align=off,sleep=on -global driver=timer." + chip + ".timg,property=wdt_disable,value=true -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
+qemu_args := "-icount shift=3,align=off,sleep=on -global driver=timer." + chip + ".timg,property=wdt_disable,value=true -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
+#qemu_args := "-s -S -icount 1 -global driver=timer." + chip + ".timg,property=wdt_disable,value=true -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
 
 default:
   @just --list --unsorted
@@ -17,11 +24,30 @@ build: apply-just-config
   espflash save-image --chip {{chip}} --flash-size {{flash_size}} --merge {{elf}} {{app}}
 
 # Run the binary firmware image using QEMU
-run: apply-just-config
+run EXTRAARGS="": apply-just-config
   #!/usr/bin/env bash
   test -f {{app}} || exit 1
-  echo "Ctrl-A X to Exit!" >&2
-  {{qemu}} -nographic -serial mon:stdio -machine {{chip}} -m 4 -drive file={{app}},if=mtd,format=raw
+  {{qemu}} {{qemu_args}} -serial mon:stdio {{EXTRAARGS}}
+  #{{qemu}} {{qemu_args}} -serial stdio -monitor none
+
+run-with-timeout TIMEOUT="3":
+  #!/usr/bin/env bash
+  test -f {{app}} || exit 1
+  rm -f qemu.log
+  # Launch in background
+  # icount 3 is required to simuilate a 125 MHz chip
+  {{qemu}} {{qemu_args}} -monitor tcp:127.0.0.1:44444,server,nowait -serial file:qemu.log &
+  sleep {{TIMEOUT}}
+  # Quit QEMU
+  echo q | nc -N 127.0.0.1 44444
+  # Wait for exit
+  wait
+  cat qemu.log
+  rm -f qemu.log
+
+gdb:
+  #!/usr/bin/env bash
+  {{gdb}} -ex "target remote :1234" -ex "monitor system_reset" {{elf}} #-ex "tb app_main" -ex "c"
 
 # Replaces target/arch strings in Cargo.toml and .cargo/config.toml,
 # in response to the 'chip' setting in the base 'just.toml'

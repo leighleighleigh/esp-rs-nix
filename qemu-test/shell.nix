@@ -4,7 +4,7 @@ let
     esp-rs = pkgs.callPackage ../esp-rs/default.nix {};
     # QEMU-ESPRESSIF
     esp-qemu-src = builtins.fetchTarball "https://github.com/SFrijters/nix-qemu-espressif/archive/master.tar.gz";
-    esp-qemu = pkgs.callPackage "${esp-qemu-src}/packages/qemu-espressif" { enableTests = false; };
+    esp-qemu = pkgs.callPackage "${esp-qemu-src}/packages/qemu-espressif" { enableTests = false; enableTools = true; };
 in
 pkgs.mkShell rec {
     name = "test-esp-rs-nix";
@@ -28,6 +28,7 @@ pkgs.mkShell rec {
         pkgs.just
         # This is for parameterising the justfile
         pkgs.toml-cli
+        pkgs.gdb
     ];
 
     LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
