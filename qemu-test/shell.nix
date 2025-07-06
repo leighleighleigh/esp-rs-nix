@@ -3,7 +3,8 @@ let
     # source version
     esp-rs = pkgs.callPackage ../esp-rs/default.nix {};
     # QEMU-ESPRESSIF
-    esp-qemu-src = builtins.fetchTarball "https://github.com/SFrijters/nix-qemu-espressif/archive/master.tar.gz";
+    esp-qemu-src = builtins.fetchTarball "https://github.com/leighleighleigh/nix-qemu-espressif/archive/master.tar.gz";
+    #esp-qemu-src = builtins.fetchTarball "https://github.com/SFrijters/nix-qemu-espressif/archive/master.tar.gz";
     esp-qemu = pkgs.callPackage "${esp-qemu-src}/packages/qemu-espressif" { enableTests = false; enableTools = true; };
 in
 pkgs.mkShell rec {
@@ -24,8 +25,10 @@ pkgs.mkShell rec {
         #pkgs.picocom
         #pkgs.vscode-fhs
         pkgs.libusb1
-        # Workspace command runner
+
+        # Workspace command runners
         pkgs.just
+        pkgs.mprocs
         # This is for parameterising the justfile
         pkgs.toml-cli
         pkgs.gdb

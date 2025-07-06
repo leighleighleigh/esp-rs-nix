@@ -16,5 +16,5 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - run: |
           cd qemu-test && \
-          nix-shell --run 'just build && timeout 10 just run'
+          nix-shell --run 'just build && just run-with-timeout 10'
                 
