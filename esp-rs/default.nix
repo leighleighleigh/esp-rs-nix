@@ -5,6 +5,7 @@
 let
     esp-rust-build = pkgs.callPackage ./rust.nix {};
     esp-xtensa-gcc = pkgs.callPackage ./xtensa-gcc.nix {};
+    esp-xtensa-gdb = pkgs.callPackage ./xtensa-gdb.nix {};
     esp-riscv32-gcc = pkgs.callPackage ./riscv32-gcc.nix {};
     esp-riscv32-gdb = pkgs.callPackage ./riscv32-gdb.nix {};
 in
@@ -15,7 +16,7 @@ pkgs.stdenv.mkDerivation rec {
     version = "1.88.0.0";
 
     nativeBuildInputs = with pkgs; [ autoPatchelfHook zlib pkg-config gcc stdenv.cc.cc ];
-    buildInputs = [ esp-rust-build esp-xtensa-gcc esp-riscv32-gcc ];
+    buildInputs = [ esp-rust-build esp-xtensa-gcc esp-xtensa-gdb esp-riscv32-gcc esp-riscv32-gdb ];
     autoPatchelfIgnoreMissingDeps = [ "*" ];
     
     # The rust-src component from espressif rustc
@@ -37,6 +38,8 @@ pkgs.stdenv.mkDerivation rec {
     cp -r ${esp-rust-build}/* $out
     chmod -R u+rw $out
     cp -r ${esp-xtensa-gcc}/* $out
+    chmod -R u+rw $out
+    cp -r ${esp-xtensa-gdb}/* $out
     chmod -R u+rw $out
     cp -r ${esp-riscv32-gcc}/* $out
     chmod -R u+rw $out

@@ -14,6 +14,7 @@ flash_size := "4mb" # The binary will be padded to be this size, which is requir
 # icount 8 is slightly slower than realtime, 9 slightly faster
 # 'auto' gets very close to realtime.
 icount := "auto"
+#icount := "9"
 
 #qemu_args := "-icount " + icount + " -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
 #qemu_args := "-icount shift=" + icount + ",align=off,sleep=on -global driver=timer." + chip + ".timg,property=wdt_disable,value=true -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
@@ -29,7 +30,7 @@ build: apply-just-config
   espflash save-image --chip {{chip}} --flash-size {{flash_size}} --merge {{elf}} {{app}}
 
 # Run the binary firmware image using QEMU
-run EXTRAARGS="": apply-just-config
+run EXTRAARGS="": apply-just-config build
   #!/usr/bin/env bash
   test -f {{app}} || exit 1
   #{{qemu}} {{qemu_args}} -monitor none -serial mon:stdio {{EXTRAARGS}}
@@ -55,9 +56,9 @@ gdb:
   #{{gdb}} -ex "target remote :1234" -ex "monitor system_reset" {{elf}}
   {{gdb}} -ex "target remote :1234"
 
-gdb-dump OUT:
-  #!/usr/bin/env bash
-  {{gdb}} -ex "target remote :1234" -ex "dump binary memory {{OUT}}.systimer.bin 0x60023000 0x60023FFF" -ex "dump binary memory {{OUT}}.system.bin 0x600C0000 0x600C0FFF"
+#gdb-dump OUT:
+#  #!/usr/bin/env bash
+#  {{gdb}} -ex "target remote :1234" -ex "dump binary memory {{OUT}}.systimer.bin 0x60023000 0x60023FFF" -ex "dump binary memory {{OUT}}.system.bin 0x600C0000 0x600C0FFF"
 
 # Replaces target/arch strings in Cargo.toml and .cargo/config.toml,
 # in response to the 'chip' setting in the base 'just.toml'

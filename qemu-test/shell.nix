@@ -25,6 +25,7 @@ pkgs.mkShell rec {
         #pkgs.picocom
         #pkgs.vscode-fhs
         pkgs.libusb1
+        pkgs.python3Full
 
         # Workspace command runners
         pkgs.just
