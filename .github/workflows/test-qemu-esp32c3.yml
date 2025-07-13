@@ -1,4 +1,4 @@
-name: QEMU esp32s3 test 
+name: QEMU esp32c3 test 
 
 on:
   workflow_dispatch: # allows manual triggering
@@ -16,5 +16,5 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - run: |
           cd qemu-test && \
-          nix-shell --run 'just switch-to-esp32s3 && just build && just run-with-timeout 10 | grep -q "loop: 2"'
+          nix-shell --run 'just switch-to-esp32c3 && just build && just run-with-timeout 10 | grep -q "loop: 2"'
                 
