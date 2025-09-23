@@ -1,22 +1,22 @@
 {
-  pkgs ? import <nixpkgs> {},
+  pkgs ? import <nixpkgs> { },
   archname ? "x86_64-linux-gnu",
 }:
 let
 in
 pkgs.stdenv.mkDerivation rec {
-    name = "esp-xtensa-gcc";
-    version = "14.2.0_20241119";
+  name = "esp-xtensa-gcc";
+  version = "15.1.0_20250607";
 
-    src = pkgs.fetchzip {
-            url = "https://github.com/espressif/crosstool-NG/releases/download/esp-${version}/xtensa-esp-elf-${version}-${archname}.tar.xz";
-            hash = "sha256-pX2KCnUoGZtgqFmZEuNRJxDMQgqYYPRpswL3f3T0nWE=";
-          };
+  src = pkgs.fetchzip {
+    url = "https://github.com/espressif/crosstool-NG/releases/download/esp-${version}/xtensa-esp-elf-${version}-${archname}.tar.xz";
+    hash = "sha256-OLm7JQeeFdvTbga1s6D0aMFVGWjNhG023t/aHX+xxz0=";
+  };
 
-    outputs = [ "out" ];
+  outputs = [ "out" ];
 
-    installPhase = ''
+  installPhase = ''
     mkdir -p $out
     cp -r ./* $out/
-    '';
+  '';
 }
