@@ -4,21 +4,24 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = {
-    nixpkgs,
-    flake-utils,
-    ...
-  }:
+  outputs =
+    {
+      nixpkgs,
+      flake-utils,
+      ...
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = import nixpkgs {inherit system;};
-        shell = pkgs.callPackage ./shell.nix {};
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        shell = pkgs.callPackage ./shell.nix { };
         esp-rs-src = pkgs.lib.sources.cleanSource ./.;
-      in {
+      in
+      {
         package = rec {
           inherit shell;
           default = shell;
-          esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {};
+          esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" { };
         };
         devShells.default = shell;
       }
