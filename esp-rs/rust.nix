@@ -6,11 +6,11 @@ let
 in
 pkgs.stdenv.mkDerivation rec {
     name = "esp-rust-build";
-    version = "1.84.0.0";
+    version = "1.90.0.0";
 
     src = pkgs.fetchzip {
             url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${archname}.tar.xz";
-            hash = "sha256-U9JHQhHskj36bsiNvoAeGzz6sKvQ4bjla7zt1uys/Dg=";
+            hash = "sha256-YurK57jqQbNihqtJL3WmLyLoCpQb+WbPQ2+vp4KkHqQ=";
           };
 
     patchPhase = '' 
