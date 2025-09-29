@@ -6,11 +6,11 @@ let
 in
 pkgs.stdenv.mkDerivation rec {
     name = "esp-xtensa-gcc";
-    version = "14.2.0_20241119";
+    version = "15.1.0_20250607";
 
     src = pkgs.fetchzip {
             url = "https://github.com/espressif/crosstool-NG/releases/download/esp-${version}/xtensa-esp-elf-${version}-${archname}.tar.xz";
-            hash = "sha256-pX2KCnUoGZtgqFmZEuNRJxDMQgqYYPRpswL3f3T0nWE=";
+            hash = "sha256-OLm7JQeeFdvTbga1s6D0aMFVGWjNhG023t/aHX+xxz0=";
           };
 
     outputs = [ "out" ];

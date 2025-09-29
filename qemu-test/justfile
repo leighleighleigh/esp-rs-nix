@@ -1,0 +1,86 @@
+# Im using a TOML file and a shell utility to 
+# parameterize this justfile. That why it looks a bit messy!
+# The benefit is I can quickly switch between the
+# 'esp32c3' and 'esp32s3' chips just by editing the 'env.toml' file.
+conf := "env.toml"
+chip := shell('toml get -r $1 chip',conf)
+arch := shell('toml get -r $1 $2.arch',conf,chip)
+qemu := shell('toml get -r $1 $2.qemu',conf,chip)
+gdb := shell('toml get -r $1 $2.gdb',conf,chip)
+
+elf := justfile_directory() / "target/" + arch + "/release/app"  # The build result from cargo
+app := justfile_directory() / "target" / "app.bin" # Where will the final firmware binary be saved?
+flash_size := "4mb" # The binary will be padded to be this size, which is required by QEMU
+
+# icount is the emulation speed.
+# Higher is faster!
+# icount 3 slows things down a lot
+# icount 8 is slightly slower than realtime, 9 slightly faster
+# 'auto' gets very close to realtime.
+icount := "auto"
+#icount := "8"
+
+#qemu_args := "-icount " + icount + " -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
+#qemu_args := "-icount shift=" + icount + ",align=off,sleep=on -global driver=timer." + chip + ".timg,property=wdt_disable,value=true -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
+qemu_args := "-icount shift=" + icount + " -global driver=timer." + chip + ".timg,property=wdt_disable,value=false -nographic -machine " + chip + " -m 4 -drive file=" + app + ",if=mtd,format=raw"
+
+default:
+  @just --list --unsorted
+
+# Build the rust application, and save it as a binary firmware image.
+build: apply-just-config
+  #!/usr/bin/env bash
+  cargo build --release --target {{arch}} && \
+  espflash save-image --chip {{chip}} --flash-size {{flash_size}} --merge {{elf}} {{app}}
+
+# Run the binary firmware image using QEMU
+run EXTRAARGS="": apply-just-config build
+  #!/usr/bin/env bash
+  test -f {{app}} || exit 1
+  #{{qemu}} {{qemu_args}} -monitor none -serial mon:stdio {{EXTRAARGS}}
+  {{qemu}} {{qemu_args}} -serial mon:stdio -monitor none {{EXTRAARGS}}
+
+run-with-timeout TIMEOUT="3":
+  #!/usr/bin/env bash
+  function cleanup(){
+    rm -rf qemu.log
+  }
+  trap cleanup EXIT
+  test -f {{app}} || exit 1
+  rm -f qemu.log
+  # Launch in background
+  # icount 3 is required to simuilate a 125 MHz chip
+  {{qemu}} {{qemu_args}} -monitor tcp:127.0.0.1:44444,server,nowait -serial file:qemu.log &
+  sleep {{TIMEOUT}}
+  # Quit QEMU
+  echo q | nc -N 127.0.0.1 44444
+  # Wait for exit
+  wait
+  cat qemu.log
+
+gdb:
+  #!/usr/bin/env bash
+  #{{gdb}} -ex "target remote :1234" -ex "monitor system_reset" {{elf}}
+  {{gdb}} -ex "target remote :1234"
+
+#gdb-dump OUT:
+#  #!/usr/bin/env bash
+#  {{gdb}} -ex "target remote :1234" -ex "dump binary memory {{OUT}}.systimer.bin 0x60023000 0x60023FFF" -ex "dump binary memory {{OUT}}.system.bin 0x600C0000 0x600C0FFF"
+
+# Replaces target/arch strings in Cargo.toml and .cargo/config.toml,
+# in response to the 'chip' setting in the base 'just.toml'
+[private]
+apply-just-config:
+  #!/usr/bin/env bash
+  echo "{{chip}}"
+  sed -i -E 's/"esp32\w+"/"{{chip}}"/g' Cargo.toml
+  sed -i -E 's/^(target = ").*"/\1{{arch}}"/g' .cargo/config.toml
+
+switch-to-esp32s3:
+  #!/usr/bin/env bash
+  toml set env.toml chip "esp32s3" | sponge env.toml
+
+switch-to-esp32c3:
+  #!/usr/bin/env bash
+  toml set env.toml chip "esp32c3" | sponge env.toml
+
