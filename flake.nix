@@ -2,28 +2,18 @@
   description = "A nix-shell for developing with Rust on Xtensa+RISCV ESP32 targets";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
-  outputs =
+  outputs = inputs @ { flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; }
     {
-      nixpkgs,
-      flake-utils,
-      ...
-    }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        shell = pkgs.callPackage ./shell.nix { };
-        esp-rs-src = pkgs.lib.sources.cleanSource ./.;
-      in
-      {
-        package = rec {
-          inherit shell;
-          default = shell;
-          esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" { };
-        };
-        devShells.default = shell;
-      }
-    );
+      # List of supported systems
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
+      
+      # Import the modular flake parts here
+      imports = [
+        ./package.nix
+        ./shell.nix
+      ];
+    };
 }
