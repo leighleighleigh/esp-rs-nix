@@ -100,17 +100,33 @@
     systemNameMap = {
       "x86_64-linux" = "x86_64-linux-gnu";
       "aarch64-linux" = "aarch64-linux-gnu";
+      "aarch64-darwin" = "aarch64-apple-darwin";
     };
 
     # Version entries are entered below.
+    "16.3_20250913" = {
+      "xtensa" = {
+        "x86_64-linux-gnu" = "sha256-LLbllfc+QvPyuv1mqNwgKDVTCMdDI4fDm+yt7dj2q1A=";
+        "aarch64-linux-gnu" = "sha256-OEQmdd2urX7f2vDMlLFKJ3WQjT3TJCcOusarYneSsYE=";
+        "aarch64-apple-darwin" = "sha256-0Gx6SquQyPQobJNxSlaUHWQZq+vBWJx3ahSACpFu/50=";
+      };
+      "riscv32" = {
+        "x86_64-linux-gnu" = "sha256-XN0ED+rlOjrWLGpC4gBdPcGkPF5bQgiG1IyHjtmYKoI=";
+        "aarch64-linux-gnu" = "sha256-O7uGkX89KUv2YEB7UA2rt9FmU8L4J7bvKcNxorFVIPg=";
+        "aarch64-apple-darwin" = "sha256-T+2utYRNOH112pJtBMBeW32so6jsGNG1eTJ4TwarcIk=";
+      };
+    };
+
     "16.2_20250324" = {
       "xtensa" = {
         "x86_64-linux-gnu" = "sha256-gphR1KiiPKxlZ0cQKskiMQj3hkbiW7pwhHoF38cbBC0=";
         "aarch64-linux-gnu" = "sha256-FJTclD0rHIpABxBTwzU4mScC5l2hSnRu1PSyoN9BNAM=";
+        "aarch64-apple-darwin" = "sha256-blN5BXz2ZQaduzq66DbZroucDEOu64kejo/bSWHp8+Q=";
       };
       "riscv32" = {
         "x86_64-linux-gnu" = "sha256-uDro2vSq1HELT2n9mNhD+H5Ld1EBMfyGf3i+RGbPRjc=";
         "aarch64-linux-gnu" = "sha256-bl3bx8fXS4VGuL+u4bphM9vzOKaSPN1f6PDvh2gsfZA=";
+        "aarch64-apple-darwin" = "sha256-yiV8jQS1L0yZRKzKJZbkl2F2FLrwT5huKwTRRAevgQ4=";
       };
     };
   };
