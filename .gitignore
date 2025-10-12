@@ -14,3 +14,6 @@ Cargo.lock
 *.pdb
 .direnv
 .envrc
+
+# Ignore nix build result
+result
