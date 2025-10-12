@@ -2,15 +2,13 @@
   perSystem = { pkgs, self', system, ... }:
     let 
       # Rust version
-      version = "1.89.0.0";
+      version = "1.90.0.0"; # Rust version
       # Cross-compiler toolchain version (GCC)
-      crosstool-version = "15.1.0_20250607";
+      crosstool-version = "15.2.0_20250920";
       # Binutils version (GDB)
-      binutils-version = "16.2_20250324";
+      binutils-version = "16.3_20250913";
       # Get our system string
       systemName = pkgs.stdenv.hostPlatform.system;
-      # systemName = "${system}";
-      # systemName = "${pkgs.hostPlatform}";
     in
     {
       # Rustc version

@@ -10,9 +10,9 @@ let
     # This will build esp-rs-src, chosen above
     esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {
         pkgs = pkgs;
-        version = "1.89.0.0"; # Rust version
-        crosstool-version = "15.1.0_20250607"; # Cross-compiler toolchain version (GCC)
-        binutils-version = "16.2_20250324"; # Binutils version (GDB)
+        version = "1.90.0.0"; # Rust version
+        crosstool-version = "15.2.0_20250920"; # Cross-compiler toolchain version (GCC)
+        binutils-version = "16.3_20250913"; # Binutils version (GDB)
     };
 in
 pkgs.mkShell rec {
