@@ -1,17 +1,21 @@
 {
-  pkgs ? import <nixpkgs> { },
-  archname ? "x86_64-unknown-linux-gnu",
+  pkgs,
+  version ? "1.89.0.0",
+  systemName ? "x86_64-linux",
 }:
-let
+let 
+  # Import our versions table
+  srcList = (import ./versions.nix).rust-build;
+  # Figure out our archmame
+  archName = srcList.systemNameMap.${systemName};
+  # Fetch the url and hash
+  src-url = srcList.urlBuilder archName version;
+  src-hash = srcList.${version}.${archName};
 in
-pkgs.stdenv.mkDerivation rec {
+pkgs.stdenv.mkDerivation {
   name = "esp-rust-build";
-  version = "1.89.0.0";
-
-  src = pkgs.fetchzip {
-    url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${archname}.tar.xz";
-    hash = "sha256-3mL6sG5Uu/PwvDXKZQs85WwSlQQn/MsVkQrxeZ4MhA4=";
-  };
+  version = "${version}";
+  src = pkgs.fetchzip { url = src-url; hash = src-hash; };
 
   patchPhase = ''
     patchShebangs ./install.sh
@@ -21,7 +25,6 @@ pkgs.stdenv.mkDerivation rec {
 
   #Usage: ./install.sh [options]
   #Options:
-
   #    --uninstall                      only uninstall from the installation prefix
   #    --destdir=[<none>]               set installation root
   #    --prefix=[/usr/local]            set installation prefix
@@ -37,9 +40,8 @@ pkgs.stdenv.mkDerivation rec {
   #    --disable-ldconfig               don't run ldconfig after installation (Linux only)
   #    --disable-verify                 don't obsolete
   #    --verbose                        run with verbose output
-
   installPhase = ''
-    mkdir -p $out
-    ./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs
+  mkdir -p $out
+  ./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs 
   '';
 }

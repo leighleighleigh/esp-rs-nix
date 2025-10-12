@@ -1,10 +1,13 @@
 {
   perSystem = { pkgs, self', ... }:
     let 
-      esp-rs-src = pkgs.lib.sources.cleanSource ./.;
+      # What rustc version are we targeting
+      version = "1.89.0.0";
+      # Get our system string
+      systemName = pkgs.stdenv.hostPlatform.system;
     in
     {
-      packages.esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" { };
+      packages.esp-rs = pkgs.callPackage ./esp-rs/package.nix { version = version; systemName = systemName; };
       packages.default = self'.packages.esp-rs;
     };
 }
