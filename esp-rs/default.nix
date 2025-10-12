@@ -2,15 +2,14 @@
 # WITH THE PRE-FLAKE-PARTS VERSIONS OF THIS REPO.
 {
   pkgs ? import <nixpkgs> {}, 
+  # Rust version
+  version ? "1.89.0.0",
+  # Cross-compiler toolchain version (GCC)
+  crosstool-version ? "15.1.0_20250607",
+  # Binutils version (GDB)
+  binutils-version ? "16.2_20250324",
 }:
 let 
-  # Rust version
-  version = "1.89.0.0";
-  # Cross-compiler toolchain version (GCC)
-  crosstool-version = "15.1.0_20250607";
-  # Binutils version (GDB)
-  binutils-version = "16.2_20250324";
-
   # Get our system string
   systemName = pkgs.stdenv.hostPlatform.system;
 
