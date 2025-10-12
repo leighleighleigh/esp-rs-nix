@@ -1,37 +1,19 @@
 {
   pkgs,
   version ? "1.89.0.0",
+  crosstool-version ? "15.1.0_20250607",
+  binutils-version ? "16.2_20250324",
   systemName ? "x86_64-linux",
 }:
 let 
-  # Other packages we depend on
+  # rust-src is the last thing to be built, as it depends on the other packages
   esp-rust-build = pkgs.callPackage ./rust-build.nix { version = version; systemName = systemName; };
+  esp-xtensa-gcc = pkgs.callPackage ./esp-gcc.nix { crosstool-version = crosstool-version; systemName = systemName; targetName = "xtensa"; };
+  esp-riscv32-gcc = pkgs.callPackage ./esp-gcc.nix { crosstool-version = crosstool-version; systemName = systemName; targetName = "riscv32"; };
 
-  srcList = (import ./versions.nix).rust-src;
-  src-url = srcList.urlBuilder version;
-  src-hash = srcList.${version};
+  esp-xtensa-gdb = pkgs.callPackage ./esp-gdb.nix { binutils-version = binutils-version; systemName = systemName; targetName = "xtensa"; };
+  esp-riscv32-gdb = pkgs.callPackage ./esp-gdb.nix { binutils-version = binutils-version; systemName = systemName; targetName = "riscv32"; };
+
+  esp-rust-src = pkgs.callPackage ./rust-src.nix { version = version; esp-rust-build = esp-rust-build; esp-xtensa-gcc = esp-xtensa-gcc; esp-riscv32-gcc = esp-riscv32-gcc; esp-xtensa-gdb = esp-xtensa-gdb; esp-riscv32-gdb = esp-riscv32-gdb; };
 in
-pkgs.stdenv.mkDerivation {
-  name = "esp-rs";
-  version = "${version}";
-  src = pkgs.fetchzip { url = src-url; hash = src-hash; };
-
-  patchPhase = ''
-  patchShebangs ./install.sh
-  '';
-
-  outputs = [ "out" ];
-
-  installPhase = ''
-  mkdir -p $out
-
-  # copy esp-rust into output of this derivation, required for installation.
-  cp -r ${esp-rust-build}/* $out
-  chmod -R u+rw $out
-
-  # install onto it
-  ./install.sh --destdir=$out --prefix="" --disable-ldconfig
-
-  runHook postInstall
-  '';
-}
+esp-rust-src
