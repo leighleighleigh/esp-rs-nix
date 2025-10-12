@@ -26,7 +26,7 @@ pkgs.mkShell rec {
         pkgs.espflash
         pkgs.pkg-config
         pkgs.stdenv.cc
-        pkgs.systemdMinimal
+        #pkgs.systemdMinimal
     ];
 
     shellHook = ''

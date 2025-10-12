@@ -24,7 +24,6 @@
             pkgs.espflash
             pkgs.pkg-config
             pkgs.stdenv.cc
-            pkgs.systemdMinimal
           ];
 
           shellHook = ''
