@@ -1,23 +1,19 @@
-{ pkgs ? import <nixpkgs> {}}:
+{
+  pkgs ? import <nixpkgs> {}
+}:
 let 
     # Uses this folder as the source for esp-rs-nix (in-repo nix-shell)
     esp-rs-src = pkgs.lib.sources.cleanSource ./.;
+    # If using this shell.nix out-of-repo, change esp-rs-src to something similar to:
+    # esp-rs-src = builtins.fetchTarball "https://github.com/leighleighleigh/esp-rs-nix/archive/main.tar.gz";
 
-    # Examples for out-of-repo nix-shell usage below.
-    #
-    # # Use the latest release of esp-rs-nix
-    # esp-rs-src = builtins.fetchTarball "https://github.com/leighleighleigh/esp-rs-nix/archive/master.tar.gz";
-    #
-    # # Use a pinned release of esp-rs-nix, at commit '0c3fa7245d38019e60c4ae56b2e98465c1b8a5dc'
-    # esp-rs-src = pkgs.fetchFromGitHub {
-    #   owner = "leighleighleigh";
-    #   repo = "esp-rs-nix";
-    #   rev = "0c3fa7245d38019e60c4ae56b2e98465c1b8a5dc";
-    #   hash = "sha256-b5kb6gxqutHySWEoweNfKbZw1r7DkwqRC39RWsyFSLU=";
-    # };
-    
-    # Call the package from wherever the source was obtained
-    esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {};
+    # This will build esp-rs-src, chosen above
+    esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {
+        pkgs = pkgs;
+        version = "1.89.0.0"; # Rust version
+        crosstool-version = "15.1.0_20250607"; # Cross-compiler toolchain version (GCC)
+        binutils-version = "16.2_20250324"; # Binutils version (GDB)
+    };
 in
 pkgs.mkShell rec {
     name = "esp-rs-nix";
@@ -25,12 +21,12 @@ pkgs.mkShell rec {
     # You may wish to change these build inputs for your application
     buildInputs = [
         esp-rs
+        pkgs.rust-analyzer
         pkgs.rustup
         pkgs.espflash
-        pkgs.rust-analyzer
         pkgs.pkg-config
         pkgs.stdenv.cc
-        pkgs.systemdMinimal
+        #pkgs.systemdMinimal
     ];
 
     shellHook = ''

@@ -2,25 +2,39 @@
   description = "A nix-shell for developing with Rust on Xtensa+RISCV ESP32 targets";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
-  outputs = {
-    nixpkgs,
-    flake-utils,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = import nixpkgs {inherit system;};
-        shell = pkgs.callPackage ./shell.nix {};
-        esp-rs-src = pkgs.lib.sources.cleanSource ./.;
-      in {
-        package = rec {
-          inherit shell;
-          default = shell;
-          esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {};
+  outputs = inputs @ { flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; }
+    {
+      # List of supported systems
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      
+      # Import the modular flake parts here
+      imports = [
+        ./package.nix
+      ];
+
+      perSystem = { pkgs, self', ... }: {
+        devShells.default = pkgs.mkShell {
+          packages = [
+            self'.packages.esp-rs
+            pkgs.rust-analyzer
+            pkgs.rustup
+            pkgs.espflash
+            pkgs.pkg-config
+            pkgs.stdenv.cc
+          ];
+
+          shellHook = ''
+            # Add a prefix 'esp-rs' to the shell prompt
+            export PS1="(esp-rs)$PS1"
+
+            # This variable is important - it tells rustup where to find the esp toolchain,
+            # without needing to copy it into your local ~/.rustup/ folder.
+            export RUSTUP_TOOLCHAIN=${self'.packages.esp-rs}
+          '';
         };
-        devShells.default = shell;
-      }
-    );
+      };
+    };
 }
