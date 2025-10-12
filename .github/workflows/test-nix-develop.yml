@@ -8,12 +8,12 @@ on:
       - main
 
 jobs:
-  build:
+  develop:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.1.7
 
       - uses: DeterminateSystems/nix-installer-action@main
       - run: |
-          nix-shell
+          nix develop
                 
