@@ -1,6 +1,4 @@
 {
-  debug = true;
-
   perSystem = { pkgs, self', system, ... }:
     let 
       # Rust version

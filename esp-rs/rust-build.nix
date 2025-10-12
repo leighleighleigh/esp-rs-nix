@@ -21,6 +21,14 @@ pkgs.stdenv.mkDerivation {
     patchShebangs ./install.sh
   '';
 
+  nativeBuildInputs = with pkgs; [
+    autoPatchelfHook
+    pkg-config
+    stdenv.cc.cc
+    zlib
+    gcc
+  ];
+
   outputs = [ "out" ];
 
   #Usage: ./install.sh [options]

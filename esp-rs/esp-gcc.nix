@@ -18,6 +18,13 @@ pkgs.stdenv.mkDerivation {
   version = "${crosstool-version}";
   src = pkgs.fetchzip { url = src-url; hash = src-hash; };
 
+  nativeBuildInputs = with pkgs; [
+    autoPatchelfHook
+    gcc
+    stdenv.cc.cc
+    pkg-config
+  ];
+
   outputs = [ "out" ];
 
   installPhase = ''

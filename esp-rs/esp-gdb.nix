@@ -18,6 +18,20 @@ pkgs.stdenv.mkDerivation {
   version = "${binutils-version}";
   src = pkgs.fetchzip { url = src-url; hash = src-hash; };
 
+  buildInputs = [
+    # Required for GDB tooling
+    pkgs.python3
+  ];
+
+  nativeBuildInputs = with pkgs; [
+    autoPatchelfHook
+  ];
+
+  # Because we might not have all required python versions available
+  autoPatchelfIgnoreMissingDeps = [
+    "libpython3.*.so.1.0"
+  ];
+
   outputs = [ "out" ];
 
   installPhase = ''

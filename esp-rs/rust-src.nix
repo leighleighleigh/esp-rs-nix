@@ -19,6 +19,22 @@ pkgs.stdenv.mkDerivation {
   version = "${version}";
   src = pkgs.fetchzip { url = src-url; hash = src-hash; };
 
+  nativeBuildInputs = with pkgs; [
+    # autoPatchelfHook
+    # zlib
+    # pkg-config
+    # gcc
+    # stdenv.cc.cc
+  ];
+
+  buildInputs = [
+    esp-rust-build
+    esp-xtensa-gcc
+    esp-xtensa-gdb
+    esp-riscv32-gcc
+    esp-riscv32-gdb
+  ];
+
   patchPhase = ''
   patchShebangs ./install.sh
   '';
