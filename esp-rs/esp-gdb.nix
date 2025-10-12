@@ -8,7 +8,7 @@ let
   # Import our versions table
   srcList = (import ./versions.nix).esp-gdb;
   # Figure out our archmame
-  archName = srcList.systemNameMap.${systemName};
+  archName = srcList.systemNameMap.${binutils-version}.${systemName};
   # Fetch the url and hash
   src-url = srcList.urlBuilder archName targetName binutils-version;
   src-hash = srcList.${binutils-version}.${targetName}.${archName};
