@@ -14,9 +14,23 @@ Project status: **works on my machine!**
 
 # Getting started 
 
-For `nix-shell` use, please refer to `shell.nix`. 
-
+For `nix-shell` use, please refer to `shell.nix`.  
 For `nix develop` use, please refer to `flake.nix` and `package.nix`.
+
+# Version selection
+
+A specific version of the rust toolchain can used with either the `shell.nix`, or `package.nix` files.  
+Below is a table of the currently supported versions.  
+
+| rust-build (rustc) | crosstool-NG (gcc) | binutils (gdb) |
+| :----------------: | :----------------: | :------------: |
+| 1.90.0.0           | 15.2.0_20250920    | 16.3_20250913  |
+| 1.89.0.0           | 15.1.0_20250607    | 16.2_20250324  |
+| 1.88.0.0           |                    |                |
+| 1.87.0.0           |                    |                |
+| 1.86.0.0           |                    |                |
+
+New versions can be added by updating the `./esp-rs/versions.nix` file with the correct file hashes.  
 
 # why?
 
