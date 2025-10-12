@@ -10,11 +10,13 @@
     # Mapping from NixOS system strings to the strings used by rust-build
     systemNameMap = {
       "x86_64-linux" = "x86_64-unknown-linux-gnu";
+      "aarch64-linux" = "aarch64-unknown-linux-gnu";
     };
 
     # Version entries are entered below.
     "1.89.0.0" = {
       "x86_64-unknown-linux-gnu" = "sha256-3mL6sG5Uu/PwvDXKZQs85WwSlQQn/MsVkQrxeZ4MhA4=";
+      "aarch64-unknown-linux-gnu" = "sha256-DerxFgV7YY7koUpt7pWzP4vG88adojuYhAyoREya9fk=";
     };
   };
 
@@ -32,15 +34,18 @@
     # Mapping from NixOS system strings to the strings used by rust-build
     systemNameMap = {
       "x86_64-linux" = "x86_64-linux-gnu";
+      "aarch64-linux" = "aarch64-linux-gnu";
     };
 
     # Version entries are entered below.
     "15.1.0_20250607" = {
       "xtensa" = {
         "x86_64-linux-gnu" = "sha256-OLm7JQeeFdvTbga1s6D0aMFVGWjNhG023t/aHX+xxz0=";
+        "aarch64-linux-gnu" = "sha256-UmUr+RB12H7d7AMiykZ9/sTItRGA1AldftzqZ8iPDfI=";
       };
       "riscv32" = {
         "x86_64-linux-gnu" = "sha256-UEIlYiHqJDZ/S1bEwh47OcV5C8megc4F05n5Bh+vVM0=";
+        "aarch64-linux-gnu" = "sha256-NYohDmMiy5DcbGvBI5ou8JgDCrQCY/LVylDs8zbi9yw=";
       };
     };
   };
@@ -52,15 +57,18 @@
     # Mapping from NixOS system strings to the strings used by rust-build
     systemNameMap = {
       "x86_64-linux" = "x86_64-linux-gnu";
+      "aarch64-linux" = "aarch64-linux-gnu";
     };
 
     # Version entries are entered below.
     "16.2_20250324" = {
       "xtensa" = {
         "x86_64-linux-gnu" = "sha256-gphR1KiiPKxlZ0cQKskiMQj3hkbiW7pwhHoF38cbBC0=";
+        "aarch64-linux-gnu" = "sha256-FJTclD0rHIpABxBTwzU4mScC5l2hSnRu1PSyoN9BNAM=";
       };
       "riscv32" = {
         "x86_64-linux-gnu" = "sha256-uDro2vSq1HELT2n9mNhD+H5Ld1EBMfyGf3i+RGbPRjc=";
+        "aarch64-linux-gnu" = "sha256-bl3bx8fXS4VGuL+u4bphM9vzOKaSPN1f6PDvh2gsfZA=";
       };
     };
   };

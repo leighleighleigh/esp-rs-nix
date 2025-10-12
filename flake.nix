@@ -8,7 +8,7 @@
     flake-parts.lib.mkFlake { inherit inputs; }
     {
       # List of supported systems
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-linux" ];
       
       # Import the modular flake parts here
       imports = [
