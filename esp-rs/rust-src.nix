@@ -25,6 +25,7 @@ pkgs.stdenv.mkDerivation {
     # pkg-config
     # gcc
     # stdenv.cc.cc
+    makeWrapper
   ];
 
   buildInputs = [
@@ -47,6 +48,11 @@ pkgs.stdenv.mkDerivation {
   # copy esp-rust into output of this derivation, required for installation.
   cp -r ${esp-rust-build}/* $out
   chmod -R u+rw $out
+
+  # Wrap rustc with a sysroot flag, so it points to this esp-rs toolchain.
+  # Original issue: https://github.com/leighleighleigh/esp-rs-nix/issues/21
+  wrapProgram "$out/bin/rustc" --add-flags "--sysroot $out"
+
   cp -r ${esp-xtensa-gcc}/* $out
   chmod -R u+rw $out
   cp -r ${esp-xtensa-gdb}/* $out
