@@ -4,6 +4,7 @@
 let 
     # Uses this folder as the source for esp-rs-nix (in-repo nix-shell)
     esp-rs-src = pkgs.lib.sources.cleanSource ./.;
+
     # If using this shell.nix out-of-repo, change esp-rs-src to something similar to:
     # esp-rs-src = builtins.fetchTarball "https://github.com/leighleighleigh/esp-rs-nix/archive/main.tar.gz";
 
@@ -24,20 +25,10 @@ pkgs.mkShell rec {
     # You may wish to change these build inputs for your application
     buildInputs = [
         esp-rs
-        pkgs.rust-analyzer
-        pkgs.rustup
-        pkgs.espflash
+        #rust-analyzer
+        #rustup
+        #espflash
         pkgs.pkg-config
         pkgs.stdenv.cc
-        #pkgs.systemdMinimal
     ];
-
-    shellHook = ''
-    # Add a prefix 'esp-rs' to the shell prompt
-    export PS1="(esp-rs)$PS1"
-
-    # This variable is important - it tells rustup where to find the esp toolchain,
-    # without needing to copy it into your local ~/.rustup/ folder.
-    export RUSTUP_TOOLCHAIN=${esp-rs}
-    '';
 }
