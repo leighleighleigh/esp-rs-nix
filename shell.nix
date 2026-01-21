@@ -14,6 +14,9 @@ let
         crosstool-version = "15.2.0_20250920"; # Cross-compiler toolchain version (GCC)
         binutils-version = "16.3_20250913"; # Binutils version (GDB)
     };
+
+    # OpenOCD fork
+    #esp-openocd = pkgs.callPackage "${esp-rs-src}/esp-rs/esp-openocd.nix" {};
 in
 pkgs.mkShell rec {
     name = "esp-rs-nix";
