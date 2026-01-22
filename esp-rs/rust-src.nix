@@ -20,13 +20,20 @@ pkgs.stdenv.mkDerivation {
   src = pkgs.fetchzip { url = src-url; hash = src-hash; };
 
   nativeBuildInputs = with pkgs; [
-    # autoPatchelfHook
-    # zlib
-    # pkg-config
-    # gcc
-    # stdenv.cc.cc
+    autoPatchelfHook
+    zlib
+    pkg-config
+    gcc
+    stdenv.cc.cc
     makeWrapper
   ];
+
+  # Because we might not have all required python versions available,
+  # that gdb might want.
+  autoPatchelfIgnoreMissingDeps = [
+    "libpython3.*.so.1.0"
+  ];
+
 
   buildInputs = [
     esp-rust-build
@@ -48,10 +55,6 @@ pkgs.stdenv.mkDerivation {
   # copy esp-rust into output of this derivation, required for installation.
   cp -r ${esp-rust-build}/* $out
   chmod -R u+rw $out
-
-  # Wrap rustc with a sysroot flag, so it points to this esp-rs toolchain.
-  # Original issue: https://github.com/leighleighleigh/esp-rs-nix/issues/21
-  wrapProgram "$out/bin/rustc" --add-flags "--sysroot $out"
 
   cp -r ${esp-xtensa-gcc}/* $out
   chmod -R u+rw $out
