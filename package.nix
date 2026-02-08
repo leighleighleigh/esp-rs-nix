@@ -15,19 +15,15 @@
       packages.esp-rust-build = pkgs.callPackage ./esp-rs/rust-build.nix { version = version; systemName = systemName; };
 
       packages.esp-xtensa-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix { crosstool-version = crosstool-version; systemName = systemName; targetName = "xtensa"; };
-      packages.esp-xtensa-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix { binutils-version = binutils-version; systemName = systemName; targetName = "xtensa"; };
 
       packages.esp-riscv32-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix { crosstool-version = crosstool-version; systemName = systemName; targetName = "riscv32"; };
-      packages.esp-riscv32-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix { binutils-version = binutils-version; systemName = systemName; targetName = "riscv32"; };
 
       # rust-src is the last thing to be built, as it depends on the other packages
       packages.esp-rs = pkgs.callPackage ./esp-rs/rust-src.nix {
         version = version;
         esp-rust-build = self'.packages.esp-rust-build;
         esp-xtensa-gcc = self'.packages.esp-xtensa-gcc;
-        esp-xtensa-gdb = self'.packages.esp-xtensa-gdb;
         esp-riscv32-gcc = self'.packages.esp-riscv32-gcc;
-        esp-riscv32-gdb = self'.packages.esp-riscv32-gdb;
       };
 
       packages.default = self'.packages.esp-rs;
