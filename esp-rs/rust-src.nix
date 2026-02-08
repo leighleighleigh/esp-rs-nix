@@ -2,9 +2,7 @@
   pkgs,
   esp-rust-build,
   esp-xtensa-gcc,
-  esp-xtensa-gdb,
   esp-riscv32-gcc,
-  esp-riscv32-gdb,
   version, #? "1.89.0.0",
 }:
 let 
@@ -38,9 +36,7 @@ pkgs.stdenv.mkDerivation {
   buildInputs = [
     esp-rust-build
     esp-xtensa-gcc
-    esp-xtensa-gdb
     esp-riscv32-gcc
-    esp-riscv32-gdb
   ];
 
   patchPhase = ''
@@ -58,11 +54,7 @@ pkgs.stdenv.mkDerivation {
 
   cp -r ${esp-xtensa-gcc}/* $out
   chmod -R u+rw $out
-  cp -r ${esp-xtensa-gdb}/* $out
-  chmod -R u+rw $out
   cp -r ${esp-riscv32-gcc}/* $out
-  chmod -R u+rw $out
-  cp -r ${esp-riscv32-gdb}/* $out
   chmod -R u+rw $out
 
   # install onto it
