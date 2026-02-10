@@ -10,7 +10,7 @@ Project goals:
 Project status: **works on my machine!**
 
 > [!TIP]
-> Now supports `x86_64-linux`,`aarch64-linux`, and `aarch64-apple-darwin` systems!
+> Now supports `x86_64-linux`,`aarch64-linux`, and ~~`aarch64-apple-darwin`~~ systems!
 
 # Getting started 
 
