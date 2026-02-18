@@ -17,7 +17,6 @@
     # Version entries are entered below.
     "1.92.0.0" = {
       "x86_64-unknown-linux-gnu" = "sha256-6enJJdfzU4OmXMdyu8jtrchmO0+8tZFmfn9P3GYsnIY=";
-      #todo
       "aarch64-unknown-linux-gnu" = "sha256-srgvDco4SoxN3uRyHE2w0Oq9PHQQXD7a59ycIdmP8KE=";
       "aarch64-apple-darwin" = "sha256-PDo+amtmQW4WgwbDVlcAhDoqkUYDV+kUPoQmvHDYGS8=";
     };
