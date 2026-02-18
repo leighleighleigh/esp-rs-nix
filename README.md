@@ -10,7 +10,7 @@ Project goals:
 Project status: **works on my machine!**
 
 > [!TIP]
-> Now supports `x86_64-linux`,`aarch64-linux`, and `aarch64-apple-darwin` systems!
+> Now supports `x86_64-linux`,`aarch64-linux`, and ~~`aarch64-apple-darwin`~~ systems!
 
 # Getting started 
 
@@ -24,8 +24,9 @@ Below is a table of the currently supported versions.
 
 | rust-build (rustc) | crosstool-NG (gcc) | binutils (gdb) |
 | :----------------: | :----------------: | :------------: |
-| 1.90.0.0           | 15.2.0_20250920    | 16.3_20250913  |
-| 1.89.0.0           | 15.1.0_20250607    | 16.2_20250324  |
+| 1.92.0.0           | 15.2.0_20250920    | 16.3_20250913  |
+| 1.90.0.0           | 15.1.0_20250607    | 16.2_20250324  |
+| 1.89.0.0           |                    |                |
 | 1.88.0.0           |                    |                |
 | 1.87.0.0           |                    |                |
 | 1.86.0.0           |                    |                |

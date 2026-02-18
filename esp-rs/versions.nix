@@ -15,6 +15,11 @@
     };
 
     # Version entries are entered below.
+    "1.92.0.0" = {
+      "x86_64-unknown-linux-gnu" = "sha256-6enJJdfzU4OmXMdyu8jtrchmO0+8tZFmfn9P3GYsnIY=";
+      "aarch64-unknown-linux-gnu" = "sha256-srgvDco4SoxN3uRyHE2w0Oq9PHQQXD7a59ycIdmP8KE=";
+      "aarch64-apple-darwin" = "sha256-PDo+amtmQW4WgwbDVlcAhDoqkUYDV+kUPoQmvHDYGS8=";
+    };
     "1.90.0.0" = {
       "x86_64-unknown-linux-gnu" = "sha256-kxFqieItFj69lntVn32cy/GT4QQpQNwg1PA7lrvRB7Q=";
       "aarch64-unknown-linux-gnu" = "sha256-DneyDDKnhjACsTBySvxsw8QuXQO/r7uWMqCichYUCN8=";
@@ -46,6 +51,7 @@
     # Function to build the repo url
     urlBuilder = (version: "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz");
     # Version entries are entered below.
+    "1.92.0.0" = "sha256-nMTDpzKnjanFe8ttqPBYbIOcC3/f8HD7FgyzT4yO4M4=";
     "1.90.0.0" = "sha256-WfICsnOG5Qm7eDIbB2kgCQ07ksMyRavWUvyNs2ASM0Q=";
     "1.89.0.0" = "sha256-4LgM2Erow7/ibniGEeZ8L6Aw2son6WJHay+O20+BifA=";
     "1.88.0.0" = "sha256-zWuLI2+q0rO9ANFZOEwLHbvaO+ZANI/MJpj/JBrhxiQ=";
