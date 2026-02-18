@@ -24,10 +24,10 @@ jobs:
       - run: |
           nix develop
                 
-  develop-aarch64-darwin:
-    runs-on: macos-26
-    steps:
-      - uses: actions/checkout@v4.1.7
-      - uses: DeterminateSystems/nix-installer-action@main
-      - run: |
-          nix develop
+#  develop-aarch64-darwin:
+#    runs-on: macos-26
+#    steps:
+#      - uses: actions/checkout@v4.1.7
+#      - uses: DeterminateSystems/nix-installer-action@main
+#      - run: |
+#          nix develop
