@@ -22,15 +22,38 @@ For `nix develop` use, please refer to `flake.nix` and `package.nix`.
 A specific version of the rust toolchain can used with either the `shell.nix`, or `package.nix` files.  
 Below is a table of the currently supported versions.  
 
-| rust-build (rustc) | crosstool-NG (gcc) | binutils (gdb) |
-| :----------------: | :----------------: | :------------: |
-| 1.92.0.0           | 15.2.0_20250920    | 16.3_20250913  |
-| 1.90.0.0           | 15.1.0_20250607    | 16.2_20250324  |
-| 1.89.0.0           |                    |                |
-| 1.88.0.0           |                    |                |
-| 1.87.0.0           |                    |                |
-| 1.86.0.0           |                    |                |
+<table>
+<tr></tr>
+<tr><td valign="top">
 
+| rust-build (rustc) |
+| :----------------: |
+| 1.93.0.0           |
+| 1.92.0.0           |
+| 1.91.1.0           |
+| 1.90.0.0           |
+| 1.89.0.0           |
+| 1.88.0.0           |
+| 1.87.0.0           |
+| 1.86.0.0           |
+
+</td><td valign="top">
+ 
+| crosstool-NG (gcc) |
+| :----------------: |
+| 15.2.0_20250920    |
+| 15.1.0_20250607    |
+
+</td><td valign="top">
+
+| binutils (gdb) |
+| :------------: |
+| 16.3_20250913  |
+| 16.2_20250324  |
+
+
+</td></tr></table>
+ 
 New versions can be added by updating the `./esp-rs/versions.nix` file with the correct file hashes.  
 
 # why?
