@@ -2,7 +2,7 @@
   perSystem = { pkgs, self', system, ... }:
     let 
       # Rust version
-      version = "1.92.0.0"; # Rust version
+      version = "1.93.0.0"; # Rust version
       # Cross-compiler toolchain version (GCC)
       crosstool-version = "15.2.0_20250920";
       # Binutils version (GDB)
