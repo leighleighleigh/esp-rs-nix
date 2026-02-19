@@ -10,7 +10,7 @@ let
     # This will build esp-rs-src, chosen above
     esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {
         pkgs = pkgs;
-        version = "1.92.0.0"; # Rust version
+        version = "1.93.0.0"; # Rust version
         crosstool-version = "15.2.0_20250920"; # Cross-compiler toolchain version (GCC)
         binutils-version = "16.3_20250913"; # Binutils version (GDB)
     };
