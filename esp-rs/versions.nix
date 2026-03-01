@@ -83,6 +83,19 @@
     };
 
     # Version entries are entered below.
+    "15.2.0_20251204" = {
+      "xtensa" = {
+        "x86_64-linux-gnu" = "sha256-f2zKqpgdYqKRwvgFsPGrG4jiborzjam5aOPGqso0Lqg=";
+        "aarch64-apple-darwin" = "sha256-fBFjvLVhrJZY6pnQwZ01EDNtfbVZEiSYV0ZOmYmA0ZM=";
+        "aarch64-linux-gnu" = "sha256-Mpym5XKjjDdbJA78y58ilfJG5Kkn7x9C3FhP1pXbr5k=";
+      };
+      "riscv32" = {
+        "x86_64-linux-gnu" = "sha256-Jy3DScJ9UiEJcPLVqfV5fVgg9uAmk9OZKZDEq1aPSFk=";
+        "aarch64-apple-darwin" = "sha256-kpOheh0gzxhKb6kOt5XNnrsJjbjFd06QgBOHNJa90GI=";
+        "aarch64-linux-gnu" = "sha256-2W3qQ1kYzHqfFC7lAbiuAzRPAB22TbLRgtR8VRCMTD0=";
+      };
+    };
+
     "15.2.0_20250920" = {
       "xtensa" = {
         "x86_64-linux-gnu" = "sha256-TMjkfwsm9xwPYIowTrOgU+/Cst5uKV0xJH8sbxcTIlc=";

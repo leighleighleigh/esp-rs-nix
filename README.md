@@ -41,6 +41,7 @@ Below is a table of the currently supported versions.
  
 | crosstool-NG (gcc) |
 | :----------------: |
+| 15.2.0_20251204    |
 | 15.2.0_20250920    |
 | 15.1.0_20250607    |
 
