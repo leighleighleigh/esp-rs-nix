@@ -1,10 +1,10 @@
 {
   pkgs,
-  binutils-version, 
-  systemName, #? "x86_64-linux",
-  targetName, #? xtensa or riscv32
+  binutils-version,
+  systemName, # ? "x86_64-linux",
+  targetName, # ? xtensa or riscv32
 }:
-let 
+let
   # Import our versions table
   srcList = (import ./versions.nix).esp-gdb;
   # Figure out our archmame
@@ -13,19 +13,22 @@ let
   src-url = srcList.urlBuilder archName targetName binutils-version;
   src-hash = srcList.${binutils-version}.${targetName}.${archName};
 in
+
 pkgs.stdenv.mkDerivation {
   name = "esp-${targetName}-gdb";
   version = "${binutils-version}";
-  src = pkgs.fetchzip { url = src-url; hash = src-hash; };
+  src = pkgs.fetchzip {
+    url = src-url;
+    hash = src-hash;
+  };
+  dontStrip = pkgs.stdenv.isDarwin;
 
   buildInputs = [
     # Required for GDB tooling
     pkgs.python3
   ];
 
-  nativeBuildInputs = with pkgs; [
-    autoPatchelfHook
-  ];
+  nativeBuildInputs = with pkgs; (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
 
   # Because we might not have all required python versions available
   autoPatchelfIgnoreMissingDeps = [
@@ -35,7 +38,7 @@ pkgs.stdenv.mkDerivation {
   outputs = [ "out" ];
 
   installPhase = ''
-  mkdir -p $out
-  cp -r ./* $out/
+    mkdir -p $out
+    cp -r ./* $out/
   '';
 }

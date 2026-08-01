@@ -1,6 +1,12 @@
 {
-  perSystem = { pkgs, self', system, ... }:
-    let 
+  perSystem =
+    {
+      pkgs,
+      self',
+      system,
+      ...
+    }:
+    let
       # Rust version
       version = "1.93.0.0"; # Rust version
       # Cross-compiler toolchain version (GCC)
@@ -12,13 +18,32 @@
     in
     {
       # Rustc version
-      packages.esp-rust-build = pkgs.callPackage ./esp-rs/rust-build.nix { version = version; systemName = systemName; };
+      packages.esp-rust-build = pkgs.callPackage ./esp-rs/rust-build.nix {
+        version = version;
+        systemName = systemName;
+      };
 
-      packages.esp-xtensa-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix { crosstool-version = crosstool-version; systemName = systemName; targetName = "xtensa"; };
-      packages.esp-xtensa-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix { binutils-version = binutils-version; systemName = systemName; targetName = "xtensa"; };
+      packages.esp-xtensa-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix {
+        crosstool-version = crosstool-version;
+        systemName = systemName;
+        targetName = "xtensa";
+      };
+      packages.esp-xtensa-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix {
+        binutils-version = binutils-version;
+        systemName = systemName;
+        targetName = "xtensa";
+      };
 
-      packages.esp-riscv32-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix { crosstool-version = crosstool-version; systemName = systemName; targetName = "riscv32"; };
-      packages.esp-riscv32-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix { binutils-version = binutils-version; systemName = systemName; targetName = "riscv32"; };
+      packages.esp-riscv32-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix {
+        crosstool-version = crosstool-version;
+        systemName = systemName;
+        targetName = "riscv32";
+      };
+      packages.esp-riscv32-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix {
+        binutils-version = binutils-version;
+        systemName = systemName;
+        targetName = "riscv32";
+      };
 
       # rust-src is the last thing to be built, as it depends on the other packages
       packages.esp-rs = pkgs.callPackage ./esp-rs/rust-src.nix {

@@ -1,9 +1,9 @@
 {
   pkgs,
-  version, #? "1.89.0.0",
-  systemName,#? "x86_64-linux",
+  version, # ? "1.89.0.0",
+  systemName, # ? "x86_64-linux",
 }:
-let 
+let
   # Import our versions table
   srcList = (import ./versions.nix).rust-build;
   # Figure out our archmame
@@ -11,23 +11,36 @@ let
   # Fetch the url and hash
   src-url = srcList.urlBuilder archName version;
   src-hash = srcList.${version}.${archName};
+
+  install-cmd =
+    if pkgs.stdenv.isLinux then
+      ''./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs''
+    else
+      ''./install.sh --destdir=$out --prefix="" --without=rust-docs-json-preview,rust-docs'';
 in
 pkgs.stdenv.mkDerivation {
   name = "esp-rust-build";
   version = "${version}";
-  src = pkgs.fetchzip { url = src-url; hash = src-hash; };
+  src = pkgs.fetchzip {
+    url = src-url;
+    hash = src-hash;
+  };
+
+  dontStrip = pkgs.stdenv.isDarwin;
 
   patchPhase = ''
     patchShebangs ./install.sh
   '';
 
-  nativeBuildInputs = with pkgs; [
-    autoPatchelfHook
-    pkg-config
-    stdenv.cc.cc
-    zlib
-    gcc
-  ];
+  nativeBuildInputs =
+    with pkgs;
+    [
+      pkg-config
+      stdenv.cc.cc
+      zlib
+      gcc
+    ]
+    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
 
   outputs = [ "out" ];
 
@@ -49,7 +62,7 @@ pkgs.stdenv.mkDerivation {
   #    --disable-verify                 don't obsolete
   #    --verbose                        run with verbose output
   installPhase = ''
-  mkdir -p $out
-  ./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs 
+    mkdir -p $out
+    ${install-cmd}
   '';
 }
