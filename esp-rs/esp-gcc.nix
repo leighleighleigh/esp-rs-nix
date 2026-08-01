@@ -1,10 +1,10 @@
 {
   pkgs,
-  crosstool-version, #? "15.1.0_20250607",
-  systemName, #? "x86_64-linux",
-  targetName, #? xtensa or riscv32
+  crosstool-version, # ? "15.1.0_20250607",
+  systemName, # ? "x86_64-linux",
+  targetName, # ? xtensa or riscv32
 }:
-let 
+let
   # Import our versions table
   srcList = (import ./versions.nix).esp-gcc;
   # Figure out our archmame
@@ -16,19 +16,25 @@ in
 pkgs.stdenv.mkDerivation {
   name = "esp-${targetName}-gcc";
   version = "${crosstool-version}";
-  src = pkgs.fetchzip { url = src-url; hash = src-hash; };
+  src = pkgs.fetchzip {
+    url = src-url;
+    hash = src-hash;
+  };
+  dontStrip = pkgs.stdenv.isDarwin;
 
-  nativeBuildInputs = with pkgs; [
-    autoPatchelfHook
-    gcc
-    stdenv.cc.cc
-    pkg-config
-  ];
+  nativeBuildInputs =
+    with pkgs;
+    [
+      gcc
+      stdenv.cc.cc
+      pkg-config
+    ]
+    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
 
   outputs = [ "out" ];
 
   installPhase = ''
-  mkdir -p $out
-  cp -r ./* $out/
+    mkdir -p $out
+    cp -r ./* $out/
   '';
 }

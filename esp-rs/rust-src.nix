@@ -5,35 +5,46 @@
   esp-xtensa-gdb,
   esp-riscv32-gcc,
   esp-riscv32-gdb,
-  version, #? "1.89.0.0",
+  version, # ? "1.89.0.0",
 }:
-let 
+let
   # Import our versions table
   srcList = (import ./versions.nix).rust-src;
   # Fetch the url and hash
   src-url = srcList.urlBuilder version;
   src-hash = srcList.${version};
+
+  install-cmd =
+    if pkgs.stdenv.isLinux then
+      ''./install.sh --destdir=$out --disable-ldconfig --prefix=""''
+    else
+      ''./install.sh --destdir=$out --prefix=""'';
 in
 pkgs.stdenv.mkDerivation {
   name = "esp-rust-src";
   version = "${version}";
-  src = pkgs.fetchzip { url = src-url; hash = src-hash; };
+  src = pkgs.fetchzip {
+    url = src-url;
+    hash = src-hash;
+  };
+  dontStrip = pkgs.stdenv.isDarwin;
 
-  nativeBuildInputs = with pkgs; [
-    autoPatchelfHook
-    zlib
-    pkg-config
-    gcc
-    stdenv.cc.cc
-    makeWrapper
-  ];
+  nativeBuildInputs =
+    with pkgs;
+    [
+      zlib
+      pkg-config
+      gcc
+      stdenv.cc.cc
+      makeWrapper
+    ]
+    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
 
   # Because we might not have all required python versions available,
   # that gdb might want.
   autoPatchelfIgnoreMissingDeps = [
     "libpython3.*.so.1.0"
   ];
-
 
   buildInputs = [
     esp-rust-build
@@ -44,30 +55,30 @@ pkgs.stdenv.mkDerivation {
   ];
 
   patchPhase = ''
-  patchShebangs ./install.sh
+    patchShebangs ./install.sh
   '';
 
   outputs = [ "out" ];
 
   installPhase = ''
-  mkdir -p $out
+    mkdir -p $out
 
-  # copy esp-rust into output of this derivation, required for installation.
-  cp -r ${esp-rust-build}/* $out
-  chmod -R u+rw $out
+    # copy esp-rust into output of this derivation, required for installation.
+    cp -r ${esp-rust-build}/* $out
+    chmod -R u+rw $out
 
-  cp -r ${esp-xtensa-gcc}/* $out
-  chmod -R u+rw $out
-  cp -r ${esp-xtensa-gdb}/* $out
-  chmod -R u+rw $out
-  cp -r ${esp-riscv32-gcc}/* $out
-  chmod -R u+rw $out
-  cp -r ${esp-riscv32-gdb}/* $out
-  chmod -R u+rw $out
+    cp -r ${esp-xtensa-gcc}/* $out
+    chmod -R u+rw $out
+    cp -r ${esp-xtensa-gdb}/* $out
+    chmod -R u+rw $out
+    cp -r ${esp-riscv32-gcc}/* $out
+    chmod -R u+rw $out
+    cp -r ${esp-riscv32-gdb}/* $out
+    chmod -R u+rw $out
 
-  # install onto it
-  ./install.sh --destdir=$out --prefix="" --disable-ldconfig
+    # install onto it
+    ${install-cmd}
 
-  runHook postInstall
+    runHook postInstall
   '';
 }
