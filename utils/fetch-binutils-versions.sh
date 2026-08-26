@@ -3,7 +3,7 @@
 # note the additiona '24.5' at the end of the darwin one. idk why they have to change this.
 darwin_postfix="24.5";
 
-for v in "16.3_20250913" ;
+for v in "17.1_20260402" ;
 do
     echo "\"${v}\" = {"
 

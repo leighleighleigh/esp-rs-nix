@@ -13,7 +13,7 @@ rustflags = [
   #   >
 ]
 
-target = "xtensa-esp32s3-none-elf"
+target = "riscv32imc-unknown-none-elf"
 
 [unstable]
 build-std = ["core"]
