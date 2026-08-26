@@ -8,11 +8,11 @@
     }:
     let
       # Rust version
-      version = "1.93.0.0"; # Rust version
+      version = "1.95.0.0"; 
       # Cross-compiler toolchain version (GCC)
-      crosstool-version = "15.2.0_20250920";
+      crosstool-version = "16.1.0_20260609"; 
       # Binutils version (GDB)
-      binutils-version = "16.3_20250913";
+      binutils-version = "17.1_20260402"; 
       # Get our system string
       systemName = pkgs.stdenv.hostPlatform.system;
     in

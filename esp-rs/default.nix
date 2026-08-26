@@ -2,12 +2,9 @@
 # WITH THE PRE-FLAKE-PARTS VERSIONS OF THIS REPO.
 {
   pkgs ? import <nixpkgs> { },
-  # Rust version
-  version ? "1.89.0.0",
-  # Cross-compiler toolchain version (GCC)
-  crosstool-version ? "15.1.0_20250607",
-  # Binutils version (GDB)
-  binutils-version ? "16.2_20250324",
+  version ? "1.95.0.0",                  # Default rustc version
+  crosstool-version ? "16.1.0_20260609", # Default cross-compiler (GCC) toolchain version
+  binutils-version ? "17.1_20260402",    # Default binutils (GDB) version
 }:
 let
   # Get our system string

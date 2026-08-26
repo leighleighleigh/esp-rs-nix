@@ -15,6 +15,41 @@
     };
 
     # Version entries are entered below.
+    "1.98.0.0" = {
+      "x86_64-unknown-linux-gnu" = "sha256-B+agdGDROpCs0Flj8FFkfAUtVrGDgfi9wDGCsTnVJX0=";
+      "aarch64-unknown-linux-gnu" = "sha256-FLlcvn8KK4B1fdkyigw/ehWvY7N63qEtzOzjzNMCT0w=";
+      "aarch64-apple-darwin" = ""; # Not available
+    };
+    "1.97.0.0" = {
+      "x86_64-unknown-linux-gnu" = "sha256-CnxysCl+Hcllge0olHSBOstgbhqDsCRAhg+mDUAnEs0=";
+      "aarch64-unknown-linux-gnu" = "sha256-d3xoQ781VFrJv7rxv36itHHrMf2VqPunUG9+HBZ1sNg=";
+      "aarch64-apple-darwin" = "sha256-oH8XnhisbsK3xTshckZk3m7YkzeB/Ux5vP4u1O+v8Gg=";
+    };
+    "1.96.0.0" = {
+      "x86_64-unknown-linux-gnu" = "sha256-4dJQAuyxC5SQDwnDqeM0SmRTQBMw3amqbMEiJwSDpE8=";
+      "aarch64-unknown-linux-gnu" = "sha256-E7yQrKolaqNFcH/Q0+/VH5J6FzF8ewZSIcPijBi8QLc=";
+      "aarch64-apple-darwin" = "sha256-8pZxvVgv7d0yIx37bdewbNmviwCoIwgVxcuPBeYack8=";
+    };
+    "1.95.0.0" = {
+      "x86_64-unknown-linux-gnu" = "sha256-3wpKYEA9i9+/6OkzuBjFD7MSufN8ZCgBmUNdB2LeprI=";
+      "aarch64-unknown-linux-gnu" = "sha256-VNfHp3+0dhhlxEcjA/zV+J3AnioLNxWsm9rOJg+POFA=";
+      "aarch64-apple-darwin" = "sha256-DDRLSBG/8WqyD0lZkSFsln1Xj11cKf2mItUZzQYSh6Q=";
+    };
+    "1.94.0.2" = {
+      "x86_64-unknown-linux-gnu" = "sha256-RmpTNJP2LyKiF/JXmGiUtGL+DfnQEI2VhpcHztQJZto=";
+      "aarch64-unknown-linux-gnu" = "sha256-UeprucOWqO/XUm4zcZsVaT2BGxgqXxbJVheUBkBAYfE=";
+      "aarch64-apple-darwin" = "sha256-cSiw5EWEhA7N2aYPyuDme1TyEMRcs/Yrh1+NFuJmW3U=";
+    };
+    "1.94.0.1" = {
+      "x86_64-unknown-linux-gnu" = "sha256-J3uTefE0H1rF9vbtn/gseGe1gehPe9d33jRPAtO3+qc=";
+      "aarch64-unknown-linux-gnu" = ""; # Not available
+      "aarch64-apple-darwin" = "sha256-IcsWCRPCjXFNxJm+dNafLMW7NHuvz7QDfSf1OFNW/CQ=";
+    };
+    "1.94.0.0" = {
+      "x86_64-unknown-linux-gnu" = "sha256-BtbcS85H9f4SXtsQVkOOS7qJeNVHxrz4mVtky6cV/uw=";
+      "aarch64-unknown-linux-gnu" = "sha256-c1EJR6QNslYtoQbfK7NHxAFPgAZt4yHyjo4ktstXmHw=";
+      "aarch64-apple-darwin" = "sha256-vvhTaPsuH0nsms8kYCsJS8hTU0vMaOxi0lucLS8slIM=";
+    };
     "1.93.0.0" = {
       "x86_64-unknown-linux-gnu" = "sha256-837shgsDonrmUqZsIhUoR+93IR8tUat67PiHfShilJc=";
       "aarch64-unknown-linux-gnu" = "sha256-QdQNRBW3/0GRYZelGPsRzW/K3gP8chlV57b2lqysz4Q=";
@@ -61,6 +96,13 @@
     # Function to build the repo url
     urlBuilder = (version: "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz");
     # Version entries are entered below.
+    "1.98.0.0" = "sha256-rGudSCkk6dvqMi1JxvJaQ90Pg2vpk+SwJQFECDT1wk0=";
+    "1.97.0.0" = "sha256-0Q/hfXD0R1pVzTgS0N8X2D3ZvPYX4y4k/EmxPy2474k=";
+    "1.96.0.0" = "sha256-Ry7y+N37g+S9tgbJVhUBcd+W7NQgrksylHL17f8759E=";
+    "1.95.0.0" = "sha256-mUpucCIRJxgFWiW5HlT95ZKvA+u4+T5CvEfgoQZoNOA=";
+    "1.94.0.2" = "sha256-l1pVzP1kaZne7U8naNGB28BnnIoqDEpklBrG5bIz+v8=";
+    "1.94.0.1" = "sha256-j5hByMifhyQQavgitvpXlfeobqa/G0zbMopxvMaKeKc=";
+    "1.94.0.0" = "sha256-LpD+emGLgfoALvsj9GDesJm7hstb7AGdqHuAkrqtGgo=";
     "1.93.0.0" = "sha256-upKiKRDvubE8obME4OVewTr6PjS/p0QOqjpQfEWBfE0=";
     "1.92.0.0" = "sha256-nMTDpzKnjanFe8ttqPBYbIOcC3/f8HD7FgyzT4yO4M4=";
     "1.91.1.0" = "sha256-3p4K15Bnin7gptpB7ub1TaYvRdWhy4AECtrWxy3wS74=";
@@ -83,6 +125,19 @@
     };
 
     # Version entries are entered below.
+    "16.1.0_20260609" = {
+      "xtensa" = {
+        "x86_64-linux-gnu" = "sha256-D02nz89injwvi+CD8tE8j/xkp1YrS28XvAmqCd3Dm+A=";
+        "aarch64-apple-darwin" = "sha256-bft1RXttXlXsY4JvTMjPdx3/Y6RQhs4xF7j1K5NRxxU=";
+        "aarch64-linux-gnu" = "sha256-IDtyN17fp76TubeBKkD8bDm0+k8LOz/lRCLFtbkHax8=";
+      };
+      "riscv32" = {
+        "x86_64-linux-gnu" = "sha256-XmWOvWlgKYgZHpquEx3qUVjkwfYrpGZF386GfVDWdAA=";
+        "aarch64-apple-darwin" = "sha256-eomHacTGWiGZ21Zq93wS6AIhAZagW7PfSs4S6a28vho=";
+        "aarch64-linux-gnu" = "sha256-eI3dWyuZGRgUKjEuQgLj/l4Rf03EMqYiXe5ipQFH1Bs=";
+      };
+    };
+
     "15.2.0_20251204" = {
       "xtensa" = {
         "x86_64-linux-gnu" = "sha256-f2zKqpgdYqKRwvgFsPGrG4jiborzjam5aOPGqso0Lqg=";
@@ -130,6 +185,11 @@
     # Mapping from NixOS system strings to the strings used by rust-build.
     # NOTE: Because binutils changes this mapping between versions, I've had to make this systemNameMap attribute depend on versions too.
     systemNameMap = {
+      "17.1_20260402" = {
+        "x86_64-linux" = "x86_64-linux-gnu";
+        "aarch64-linux" = "aarch64-linux-gnu";
+        "aarch64-darwin" = "aarch64-apple-darwin24.5";
+      };
       "16.3_20250913" = {
         "x86_64-linux" = "x86_64-linux-gnu";
         "aarch64-linux" = "aarch64-linux-gnu";
@@ -143,6 +203,19 @@
     };
 
     # Version entries are entered below.
+    "17.1_20260402" = {
+      "xtensa" = {
+        "x86_64-linux-gnu" = "sha256-wnlCFiWYEsewjhx07ZXTzVn8/e67zACTafNAwlzcG/I=";
+        "aarch64-linux-gnu" = "sha256-VqJhq1MGyPaQ1PlgC1Pe5dbOCdMIMgAdMgiLRoRL18c=";
+        "aarch64-apple-darwin24.5" = "sha256-zMQoaBgjm/vJCbuo4C63nWyTK+N/BDZOjSeFtNZ6eqI=";
+      };
+      "riscv32" = {
+        "x86_64-linux-gnu" = "sha256-Ldh/Qrxw5fbxhYDYZXqLuU+Jn40cR5VwuTxwPCpTYPs=";
+        "aarch64-linux-gnu" = "sha256-lj7SXqk3LstWaNFk0agBLvnG1Yq/5o3Pzgi1TA8r0LA=";
+        "aarch64-apple-darwin24.5" = "sha256-+W4fBwCTXlKbOSyl3kdJEpX4bgR0dMCEkfZLD1MLL3Y=";
+      };
+    };
+
     "16.3_20250913" = {
       "xtensa" = {
         "x86_64-linux-gnu" = "sha256-LLbllfc+QvPyuv1mqNwgKDVTCMdDI4fDm+yt7dj2q1A=";

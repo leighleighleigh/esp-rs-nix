@@ -1,14 +1,8 @@
 { pkgs ? import <nixpkgs> {}}:
 let 
-    # source version
-    esp-rs = pkgs.callPackage ../esp-rs/default.nix {
-        pkgs = pkgs;
-        version = "1.89.0.0"; # Rust version
-        crosstool-version = "15.1.0_20250607"; # Cross-compiler toolchain version (GCC)
-        binutils-version = "16.2_20250324"; # Binutils version (GDB)
-    };
+    esp-rs = pkgs.callPackage ../esp-rs/default.nix {};
+
     # QEMU-ESPRESSIF
-    #esp-qemu-src = builtins.fetchTarball "https://github.com/leighleighleigh/nix-qemu-espressif/archive/master.tar.gz";
     esp-qemu-src = builtins.fetchTarball "https://gitlab.com/SFrijters/nix-qemu-espressif/-/archive/master/nix-qemu-espressif-master.tar.gz";
     esp-qemu = pkgs.callPackage "${esp-qemu-src}/packages/qemu-espressif" { enableTests = false; enableTools = true; };
 in
