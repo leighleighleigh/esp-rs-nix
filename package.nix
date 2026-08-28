@@ -8,7 +8,7 @@
     }:
     let
       # Rust version
-      version = "1.95.0.0"; 
+      version = "1.96.0.0"; 
       # Cross-compiler toolchain version (GCC)
       crosstool-version = "16.1.0_20260609"; 
       # Binutils version (GDB)
