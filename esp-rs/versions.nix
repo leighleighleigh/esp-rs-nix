@@ -5,7 +5,10 @@
   # for rust-build and crosstool-NG artifacts.
   rust-build = {
     # Function to build the repo url
-    urlBuilder = (arch: version: "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${arch}.tar.xz");
+    urlBuilder = (
+      arch: version:
+      "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-${arch}.tar.xz"
+    );
 
     # Mapping from NixOS system strings to the strings used by rust-build
     systemNameMap = {
@@ -94,7 +97,10 @@
 
   rust-src = {
     # Function to build the repo url
-    urlBuilder = (version: "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz");
+    urlBuilder = (
+      version:
+      "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz"
+    );
     # Version entries are entered below.
     "1.98.0.0" = "sha256-rGudSCkk6dvqMi1JxvJaQ90Pg2vpk+SwJQFECDT1wk0=";
     "1.97.0.0" = "sha256-0Q/hfXD0R1pVzTgS0N8X2D3ZvPYX4y4k/EmxPy2474k=";
@@ -115,7 +121,10 @@
 
   esp-gcc = {
     # Function to build the repo url
-    urlBuilder = (arch: targetarch: ct-version: "https://github.com/espressif/crosstool-NG/releases/download/esp-${ct-version}/${targetarch}-esp-elf-${ct-version}-${arch}.tar.xz");
+    urlBuilder = (
+      arch: targetarch: ct-version:
+      "https://github.com/espressif/crosstool-NG/releases/download/esp-${ct-version}/${targetarch}-esp-elf-${ct-version}-${arch}.tar.xz"
+    );
 
     # Mapping from NixOS system strings to the strings used by rust-build
     systemNameMap = {
@@ -180,7 +189,10 @@
 
   esp-gdb = {
     # Function to build the repo url
-    urlBuilder = (arch: targetarch: version: "https://github.com/espressif/binutils-gdb/releases/download/esp-gdb-v${version}/${targetarch}-esp-elf-gdb-${version}-${arch}.tar.gz");
+    urlBuilder = (
+      arch: targetarch: version:
+      "https://github.com/espressif/binutils-gdb/releases/download/esp-gdb-v${version}/${targetarch}-esp-elf-gdb-${version}-${arch}.tar.gz"
+    );
 
     # Mapping from NixOS system strings to the strings used by rust-build.
     # NOTE: Because binutils changes this mapping between versions, I've had to make this systemNameMap attribute depend on versions too.

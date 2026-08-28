@@ -13,7 +13,7 @@ let
   src-hash = srcList.${version}.${archName};
 
   install-cmd =
-    if pkgs.stdenv.isLinux then
+    if pkgs.stdenv.hostPlatform.isLinux then
       ''./install.sh --destdir=$out --prefix="" --disable-ldconfig --without=rust-docs-json-preview,rust-docs''
     else
       ''./install.sh --destdir=$out --prefix="" --without=rust-docs-json-preview,rust-docs'';
@@ -26,7 +26,7 @@ pkgs.stdenv.mkDerivation {
     hash = src-hash;
   };
 
-  dontStrip = pkgs.stdenv.isDarwin;
+  dontStrip = pkgs.stdenv.hostPlatform.isDarwin;
 
   patchPhase = ''
     patchShebangs ./install.sh
@@ -40,7 +40,7 @@ pkgs.stdenv.mkDerivation {
       zlib
       gcc
     ]
-    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
+    ++ (if pkgs.stdenv.hostPlatform.isLinux then [ autoPatchelfHook ] else [ ]);
 
   outputs = [ "out" ];
 

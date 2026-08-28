@@ -15,7 +15,7 @@ let
   src-hash = srcList.${version};
 
   install-cmd =
-    if pkgs.stdenv.isLinux then
+    if pkgs.stdenv.hostPlatform.isLinux then
       ''./install.sh --destdir=$out --disable-ldconfig --prefix=""''
     else
       ''./install.sh --destdir=$out --prefix=""'';
@@ -27,7 +27,7 @@ pkgs.stdenv.mkDerivation {
     url = src-url;
     hash = src-hash;
   };
-  dontStrip = pkgs.stdenv.isDarwin;
+  dontStrip = pkgs.stdenv.hostPlatform.isDarwin;
 
   nativeBuildInputs =
     with pkgs;
@@ -38,7 +38,7 @@ pkgs.stdenv.mkDerivation {
       stdenv.cc.cc
       makeWrapper
     ]
-    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
+    ++ (if pkgs.stdenv.hostPlatform.isLinux then [ autoPatchelfHook ] else [ ]);
 
   # Because we might not have all required python versions available,
   # that gdb might want.

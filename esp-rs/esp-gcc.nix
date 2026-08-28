@@ -20,7 +20,8 @@ pkgs.stdenv.mkDerivation {
     url = src-url;
     hash = src-hash;
   };
-  dontStrip = pkgs.stdenv.isDarwin;
+
+  dontStrip = pkgs.stdenv.hostPlatform.isDarwin;
 
   nativeBuildInputs =
     with pkgs;
@@ -29,7 +30,7 @@ pkgs.stdenv.mkDerivation {
       stdenv.cc.cc
       pkg-config
     ]
-    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
+    ++ (if pkgs.stdenv.hostPlatform.isLinux then [ autoPatchelfHook ] else [ ]);
 
   outputs = [ "out" ];
 
