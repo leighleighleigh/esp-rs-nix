@@ -2,7 +2,7 @@
 # WITH THE PRE-FLAKE-PARTS VERSIONS OF THIS REPO.
 {
   pkgs ? import <nixpkgs> { },
-  version ? "1.95.0.0",                  # Default rustc version
+  version ? "1.96.0.0",                  # Default rustc version
   crosstool-version ? "16.1.0_20260609", # Default cross-compiler (GCC) toolchain version
   binutils-version ? "17.1_20260402",    # Default binutils (GDB) version
 }:
