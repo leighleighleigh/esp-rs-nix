@@ -21,14 +21,16 @@ pkgs.stdenv.mkDerivation {
     url = src-url;
     hash = src-hash;
   };
-  dontStrip = pkgs.stdenv.isDarwin;
+  dontStrip = pkgs.stdenv.hostPlatform.isDarwin;
 
   buildInputs = [
     # Required for GDB tooling
     pkgs.python3
   ];
 
-  nativeBuildInputs = with pkgs; (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
+  nativeBuildInputs =
+    with pkgs;
+    (if pkgs.stdenv.hostPlatform.isLinux then [ autoPatchelfHook ] else [ ]);
 
   # Because we might not have all required python versions available
   autoPatchelfIgnoreMissingDeps = [

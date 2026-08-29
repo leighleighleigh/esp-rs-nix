@@ -8,13 +8,13 @@ let
   # esp-rs-src = builtins.fetchTarball "https://github.com/leighleighleigh/esp-rs-nix/archive/main.tar.gz";
 
   # This will build esp-rs-src, chosen above
-  esp-rs = pkgs.callPackage "${esp-rs-src}/esp-rs/default.nix" {
+  esp-rs = pkgs.callPackage "${esp-rs-src}/package.nix" {
     # (Optional) Override the default rustc version
-    #version = "1.95.0.0"; 
+    #version = "1.95.0.0";
     # (Optional) Override the default cross-compiler (GCC) toolchain version
-    #crosstool-version = "16.1.0_20260609"; 
-    # (Optional) Override the default binutils (GDB) version 
-    #binutils-version = "17.1_20260402"; 
+    #crosstool-version = "16.1.0_20260609";
+    # (Optional) Override the default binutils (GDB) version
+    #binutils-version = "17.1_20260402";
   };
 in
 pkgs.mkShell rec {
@@ -28,13 +28,11 @@ pkgs.mkShell rec {
     pkgs.espflash
     pkgs.pkg-config
     pkgs.stdenv.cc
-    #pkgs.systemdMinimal
   ];
 
   shellHook = ''
     # Add a prefix 'esp-rs' to the shell prompt
-    export PS1="(esp-rs)$PS1"
-
+    export PS1="(esp-rs-shell)$PS1"
     # This variable is important - it tells rustup where to find the esp toolchain,
     # without needing to copy it into your local ~/.rustup/ folder.
     export RUSTUP_TOOLCHAIN=${esp-rs}
