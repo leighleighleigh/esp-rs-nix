@@ -27,7 +27,7 @@ let
     url:
     if (oldHashes ? "${url}") then
       if (builtins.stringLength oldHashes.${url}) == 0 then
-        (lib.warn "Found empty hash for URL: ${url}") oldHashes.${url}
+        (lib.warn "Existing hash for URL was empty: ${url}") oldHashes.${url}
       else
         oldHashes.${url}
     else
@@ -42,8 +42,13 @@ let
               urlToHash = "${url}";
             }
             ''echo -n "" >$out && nix-hash --type sha256 --to-sri "$(nix-prefetch-url --unpack --type sha256 "''${urlToHash}" 2>/dev/null)" >>$out || exit 0'';
+
+        hash = builtins.trace "Fetching hash for ${url}..." (builtins.readFile (hashCmd));
       in
-      builtins.trace "Fetching hash for ${url}..." (builtins.readFile (hashCmd));
+      if (builtins.stringLength hash) == 0 then
+        (lib.warn "Fetched hash for URL was empty: ${url}") hash
+      else
+        hash;
 in
 rec {
   # Step 1. Build the URLs for each package, for all versions.
