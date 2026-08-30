@@ -2,7 +2,7 @@
 # WITH 'PRE-FLAKE' USERS OF THIS REPO!!!
 { pkgs, lib, ... }:
 let
-  systemName = pkgs.stdenv.hostPlatform.system;
+  system = pkgs.stdenv.hostPlatform.system;
 in
 lib.warn
   "The file 'esp-rs/default.nix' is deprecated, please use the top-level 'package.nix' file instead."

@@ -10,7 +10,7 @@ let
   # This will build esp-rs-src, chosen above
   esp-rs = pkgs.callPackage "${esp-rs-src}/package.nix" {
     # (Optional) Override the default rustc version
-    #version = "1.95.0.0";
+    #rustc-version = "1.95.0.0";
     # (Optional) Override the default cross-compiler (GCC) toolchain version
     #crosstool-version = "16.1.0_20260609";
     # (Optional) Override the default binutils (GDB) version

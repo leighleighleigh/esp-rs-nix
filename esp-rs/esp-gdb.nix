@@ -1,22 +1,17 @@
 {
   pkgs,
-  binutils-version,
-  systemName, # ? "x86_64-linux",
-  targetName, # ? xtensa or riscv32
+  target, # xtensa or riscv32
+  version,
 }:
 let
-  # Import our versions table
-  srcList = (import ./versions.nix).esp-gdb;
-  # Figure out our archmame
-  archName = srcList.systemNameMap.${binutils-version}.${systemName};
   # Fetch the url and hash
-  src-url = srcList.urlBuilder archName targetName binutils-version;
-  src-hash = srcList.${binutils-version}.${targetName}.${archName};
+  src-url = (import ./urls.nix).esp-gdb { system = pkgs.stdenv.hostPlatform.system; targetarch = target; version = version; };
+  src-hash = (builtins.fromJSON (builtins.readFile ./hashes.json)).${src-url};
 in
 
 pkgs.stdenv.mkDerivation {
-  name = "esp-${targetName}-gdb";
-  version = "${binutils-version}";
+  name = "esp-${target}-gdb";
+  version = "${version}";
   src = pkgs.fetchzip {
     url = src-url;
     hash = src-hash;

@@ -8,27 +8,22 @@
 let
   esp-rust-build = pkgs.callPackage ./esp-rs/rust-build.nix {
     version = rustc-version;
-    systemName = pkgs.stdenv.hostPlatform.system;
   };
   esp-xtensa-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix {
-    crosstool-version = crosstool-version;
-    systemName = pkgs.stdenv.hostPlatform.system;
-    targetName = "xtensa";
+    version = crosstool-version;
+    target = "xtensa";
   };
   esp-xtensa-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix {
-    binutils-version = binutils-version;
-    systemName = pkgs.stdenv.hostPlatform.system;
-    targetName = "xtensa";
+    version = binutils-version;
+    target = "xtensa";
   };
   esp-riscv32-gcc = pkgs.callPackage ./esp-rs/esp-gcc.nix {
-    crosstool-version = crosstool-version;
-    systemName = pkgs.stdenv.hostPlatform.system;
-    targetName = "riscv32";
+    version = crosstool-version;
+    target = "riscv32";
   };
   esp-riscv32-gdb = pkgs.callPackage ./esp-rs/esp-gdb.nix {
-    binutils-version = binutils-version;
-    systemName = pkgs.stdenv.hostPlatform.system;
-    targetName = "riscv32";
+    version = binutils-version;
+    target = "riscv32";
   };
 in
 # rust-src is the last thing to be built, as it depends on the other packages

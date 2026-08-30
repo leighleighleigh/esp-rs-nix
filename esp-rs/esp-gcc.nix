@@ -1,21 +1,16 @@
 {
   pkgs,
-  crosstool-version, # ? "15.1.0_20250607",
-  systemName, # ? "x86_64-linux",
-  targetName, # ? xtensa or riscv32
+  target, # xtensa or riscv32
+  version,
 }:
 let
-  # Import our versions table
-  srcList = (import ./versions.nix).esp-gcc;
-  # Figure out our archmame
-  archName = srcList.systemNameMap.${systemName};
   # Fetch the url and hash
-  src-url = srcList.urlBuilder archName targetName crosstool-version;
-  src-hash = srcList.${crosstool-version}.${targetName}.${archName};
+  src-url = (import ./urls.nix).esp-gcc { system = pkgs.stdenv.hostPlatform.system; targetarch = target; version = version; };
+  src-hash = (builtins.fromJSON (builtins.readFile ./hashes.json)).${src-url};
 in
 pkgs.stdenv.mkDerivation {
-  name = "esp-${targetName}-gcc";
-  version = "${crosstool-version}";
+  name = "esp-${target}-gcc";
+  version = "${version}";
   src = pkgs.fetchzip {
     url = src-url;
     hash = src-hash;

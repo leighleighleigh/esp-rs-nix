@@ -1,16 +1,11 @@
 {
   pkgs,
-  version, # ? "1.89.0.0",
-  systemName, # ? "x86_64-linux",
+  version,
 }:
 let
-  # Import our versions table
-  srcList = (import ./versions.nix).rust-build;
-  # Figure out our archmame
-  archName = srcList.systemNameMap.${systemName};
   # Fetch the url and hash
-  src-url = srcList.urlBuilder archName version;
-  src-hash = srcList.${version}.${archName};
+  src-url = (import ./urls.nix).rust-build { system = pkgs.stdenv.hostPlatform.system; version = version; };
+  src-hash = (builtins.fromJSON (builtins.readFile ./hashes.json)).${src-url};
 
   install-cmd =
     if pkgs.stdenv.hostPlatform.isLinux then
