@@ -4,7 +4,7 @@ Project goals:
  - [x] Take this: https://github.com/esp-rs/rust-build ...
  - [x] ...and this: https://github.com/espressif/crosstool-NG,
  - [x] ...and this: https://github.com/espressif/binutils-gdb,
- - [x] ...and mangle them into a nix derivation (using hard-coded pre-built binaries for now).
+ - [x] ...and mangle them into a nix derivation...
  - [x] Then, take this: https://github.com/esp-rs/esp-hal ...
  - [x] ... run `nix-shell`, and compile blinky for esp32s3. 
 
@@ -15,8 +15,8 @@ Project status: **works on my machine!**
 
 # Getting Started 
 
-For `nix-shell` use, please refer to `shell.nix`.  
-For `nix develop` use, please refer to `flake.nix` and `package.nix`.
+For `nix-shell` use, please refer to `shell.nix` as a starting point.  
+For `nix develop` use, please refer to `flake.nix` as a starting point.  
 
 # Why?
 
@@ -24,19 +24,23 @@ The recommended installation method using the `espup` tool didn't work for me.
 
 # Notes
 
+ - This project uses _pre-built_ release artifacts from the projects linked above. It does NOT build the toolchain from scratch!    
  - This is for development of `no_std`, `esp-hal`-based applications only. NOT for use with `esp-hal-idf`.
  - ~~This is hard-coded to download binaries for `x86_64` only, at the moment.~~
  - PRs welcome!
 
 # Toolchain version support
 
-A specific version of the rust toolchain can selected, using the `rustc-version`, `crosstool-version`, and `binutils-version` variables defined in `package.nix`. Below is a table of the currently supported versions, **with the defaults bolded**. I will update these defaults periodically, to maintain compatibility with the `main` branch of [esp-hal](https://github.com/esp-rs/esp-hal).
+A specific version of the rust toolchain can selected, using the `rustc-version`, `crosstool-version`, and `binutils-version` variables defined in `package.nix`. 
 
-> [!TIP] To add support for a new toolchain version, perform the following steps:
+> [!TIP]
+> To add support for a new toolchain version, perform the following steps:
 > 1. Add the new version numbers to `utils/versions.nix`
 > 2. Run the `utils/update-hashes.sh` script, which will update `esp-rs/hashes.json` with the release artifact file hashes
 > 3. Commit and push the changed files
 
+Below is a table of the currently supported versions, **with the defaults bolded**.  
+I will update these defaults periodically, to maintain compatibility with the `main` branch of [esp-hal](https://github.com/esp-rs/esp-hal).
 
 | Release Date | rust-build (rustc) |   crosstool-NG (gcc)    |       binutils (gdb)        |
 | :----------: | :----------------: | :---------------------: | :-------------------------: |
