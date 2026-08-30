@@ -1,42 +1,47 @@
-{ pkgs ? import <nixpkgs> {}}:
-let 
-    esp-rs = pkgs.callPackage ../esp-rs/default.nix {};
+{
+  pkgs ? import <nixpkgs> { },
+}:
+let
+  esp-rs = pkgs.callPackage ../package.nix { };
 
-    # QEMU-ESPRESSIF
-    esp-qemu-src = builtins.fetchTarball "https://gitlab.com/SFrijters/nix-qemu-espressif/-/archive/master/nix-qemu-espressif-master.tar.gz";
-    esp-qemu = pkgs.callPackage "${esp-qemu-src}/packages/qemu-espressif" { enableTests = false; enableTools = true; };
+  # QEMU-ESPRESSIF
+  esp-qemu-src = builtins.fetchTarball "https://gitlab.com/SFrijters/nix-qemu-espressif/-/archive/master/nix-qemu-espressif-master.tar.gz";
+  esp-qemu = pkgs.callPackage "${esp-qemu-src}/packages/qemu-espressif" {
+    enableTests = false;
+    enableTools = true;
+  };
 in
 pkgs.mkShell rec {
-    name = "test-esp-rs-nix";
+  name = "test-esp-rs-nix";
 
-    buildInputs = [
-        esp-rs 
-        esp-qemu
-        pkgs.rustup 
-        pkgs.espflash
-        #pkgs.rust-analyzer
-        pkgs.pkg-config 
-        pkgs.stdenv.cc 
-        #pkgs.bacon 
-        #pkgs.systemdMinimal
-        #pkgs.lunarvim 
-        #pkgs.inotify-tools
-        #pkgs.picocom
-        #pkgs.vscode-fhs
-        pkgs.libusb1
-        pkgs.python3
-        # Workspace command runners
-        pkgs.just
-        pkgs.mprocs
-        # This is for parameterising the justfile
-        pkgs.toml-cli
-        pkgs.moreutils
-        pkgs.gdb
-    ];
+  buildInputs = [
+    esp-rs
+    esp-qemu
+    pkgs.rustup
+    pkgs.espflash
+    #pkgs.rust-analyzer
+    pkgs.pkg-config
+    pkgs.stdenv.cc
+    #pkgs.bacon
+    #pkgs.systemdMinimal
+    #pkgs.lunarvim
+    #pkgs.inotify-tools
+    #pkgs.picocom
+    #pkgs.vscode-fhs
+    pkgs.libusb1
+    pkgs.python3
+    # Workspace command runners
+    pkgs.just
+    pkgs.mprocs
+    # This is for parameterising the justfile
+    pkgs.toml-cli
+    pkgs.moreutils
+    pkgs.gdb
+  ];
 
-    LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
+  LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
 
-    shellHook = ''
+  shellHook = ''
     # custom bashrc stuff
     export PS1_PREFIX="(esp-rs)"
     . ~/.bashrc
@@ -50,5 +55,5 @@ pkgs.mkShell rec {
     if (which espflash >/dev/null 2>&1); then
     . <(espflash completions $(basename $SHELL))
     fi
-    '';
+  '';
 }

@@ -1,46 +1,11 @@
-# THIS FILE IS ONLY HERE TO PROVIDE BACKWARDS-COMPATIBILITY
-# WITH THE PRE-FLAKE-PARTS VERSIONS OF THIS REPO.
-{
-  pkgs ? import <nixpkgs> { },
-  version ? "1.96.0.0",                  # Default rustc version
-  crosstool-version ? "16.1.0_20260609", # Default cross-compiler (GCC) toolchain version
-  binutils-version ? "17.1_20260402",    # Default binutils (GDB) version
-}:
+# !!!THIS FILE IS ONLY HERE TO PROVIDE BACKWARDS-COMPATIBILITY
+# WITH 'PRE-FLAKE' USERS OF THIS REPO!!!
+{ pkgs, lib, ... }:
 let
-  # Get our system string
-  systemName = pkgs.stdenv.hostPlatform.system;
-
-  esp-rust-build = pkgs.callPackage ./rust-build.nix {
-    version = version;
-    systemName = systemName;
-  };
-  esp-xtensa-gcc = pkgs.callPackage ./esp-gcc.nix {
-    crosstool-version = crosstool-version;
-    systemName = systemName;
-    targetName = "xtensa";
-  };
-  esp-xtensa-gdb = pkgs.callPackage ./esp-gdb.nix {
-    binutils-version = binutils-version;
-    systemName = systemName;
-    targetName = "xtensa";
-  };
-  esp-riscv32-gcc = pkgs.callPackage ./esp-gcc.nix {
-    crosstool-version = crosstool-version;
-    systemName = systemName;
-    targetName = "riscv32";
-  };
-  esp-riscv32-gdb = pkgs.callPackage ./esp-gdb.nix {
-    binutils-version = binutils-version;
-    systemName = systemName;
-    targetName = "riscv32";
-  };
+  system = pkgs.stdenv.hostPlatform.system;
 in
-# rust-src is the last thing to be built, as it depends on the other packages
-pkgs.callPackage ./rust-src.nix {
-  version = version;
-  esp-rust-build = esp-rust-build;
-  esp-xtensa-gcc = esp-xtensa-gcc;
-  esp-xtensa-gdb = esp-xtensa-gdb;
-  esp-riscv32-gcc = esp-riscv32-gcc;
-  esp-riscv32-gdb = esp-riscv32-gdb;
-}
+lib.warn
+  "The file 'esp-rs/default.nix' is deprecated, please use the top-level 'package.nix' file instead."
+  pkgs.callPackage
+  ../package.nix
+  { }

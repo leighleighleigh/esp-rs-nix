@@ -8,14 +8,12 @@
   version, # ? "1.89.0.0",
 }:
 let
-  # Import our versions table
-  srcList = (import ./versions.nix).rust-src;
   # Fetch the url and hash
-  src-url = srcList.urlBuilder version;
-  src-hash = srcList.${version};
+  src-url = (import ./urls.nix).rust-src { version = version; };
+  src-hash = (builtins.fromJSON (builtins.readFile ./hashes.json)).${src-url};
 
   install-cmd =
-    if pkgs.stdenv.isLinux then
+    if pkgs.stdenv.hostPlatform.isLinux then
       ''./install.sh --destdir=$out --disable-ldconfig --prefix=""''
     else
       ''./install.sh --destdir=$out --prefix=""'';
@@ -27,7 +25,7 @@ pkgs.stdenv.mkDerivation {
     url = src-url;
     hash = src-hash;
   };
-  dontStrip = pkgs.stdenv.isDarwin;
+  dontStrip = pkgs.stdenv.hostPlatform.isDarwin;
 
   nativeBuildInputs =
     with pkgs;
@@ -38,7 +36,7 @@ pkgs.stdenv.mkDerivation {
       stdenv.cc.cc
       makeWrapper
     ]
-    ++ (if pkgs.stdenv.isLinux then [ autoPatchelfHook ] else [ ]);
+    ++ (if pkgs.stdenv.hostPlatform.isLinux then [ autoPatchelfHook ] else [ ]);
 
   # Because we might not have all required python versions available,
   # that gdb might want.
