@@ -14,23 +14,7 @@
 
     # Instantiate the default dev shell with `nix develop`
     devShells = builtins.mapAttrs (system: pkgs: {
-      default = pkgs.mkShell {
-        packages = [
-          pkgs.stdenv.cc
-          pkgs.pkg-config
-          pkgs.rustup
-          pkgs.rust-analyzer
-          pkgs.espflash
-        ];
-
-        shellHook = ''
-          # (OPTIONAL) Add a prefix 'esp-rs' to the shell prompt
-          export PS1="(esp-rs-devshell)$PS1"
-          # This variable is important - it tells rustup where to find the esp toolchain,
-          # without needing to copy it into your local ~/.rustup/ folder.
-          export RUSTUP_TOOLCHAIN=${inputs.self.packages.${system}.esp-rs}
-        '';
-      };
+      default = pkgs.callPackage ./shell.nix { };
     }) inputs.nixpkgs.legacyPackages;
   };
 }

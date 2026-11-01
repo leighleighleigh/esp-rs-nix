@@ -21,7 +21,7 @@ pkgs.mkShell rec {
   name = "esp-rs-nix";
 
   # You may wish to change these build inputs for your application
-  buildInputs = [
+  packages = [
     esp-rs
     pkgs.rust-analyzer
     pkgs.rustup
