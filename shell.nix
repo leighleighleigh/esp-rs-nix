@@ -22,7 +22,10 @@ in
 pkgs.mkShell rec {
   name = "esp-rs-nix";
 
-  packages = [ esp-rs ] ++ [
+  packages = [
+    esp-rs
+  ]
+  ++ [
     # You may wish to change these build inputs for your application
     pkgs.rust-analyzer
     pkgs.rustup
@@ -30,7 +33,7 @@ pkgs.mkShell rec {
     pkgs.pkg-config
     pkgs.stdenv.cc
   ];
-  
+
   shellHook = ''
     # Add a prefix to the shell prompt
     export PS1="(${name})$PS1"

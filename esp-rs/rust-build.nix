@@ -4,7 +4,10 @@
 }:
 let
   # Fetch the url and hash
-  src-url = (import ./urls.nix).rust-build { system = pkgs.stdenv.hostPlatform.system; version = version; };
+  src-url = (import ./urls.nix).rust-build {
+    system = pkgs.stdenv.hostPlatform.system;
+    version = version;
+  };
   src-hash = (builtins.fromJSON (builtins.readFile ./hashes.json)).${src-url};
 
   install-cmd =
