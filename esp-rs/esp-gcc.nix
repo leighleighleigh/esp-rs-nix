@@ -5,7 +5,11 @@
 }:
 let
   # Fetch the url and hash
-  src-url = (import ./urls.nix).esp-gcc { system = pkgs.stdenv.hostPlatform.system; targetarch = target; version = version; };
+  src-url = (import ./urls.nix).esp-gcc {
+    system = pkgs.stdenv.hostPlatform.system;
+    targetarch = target;
+    version = version;
+  };
   src-hash = (builtins.fromJSON (builtins.readFile ./hashes.json)).${src-url};
 in
 pkgs.stdenv.mkDerivation {

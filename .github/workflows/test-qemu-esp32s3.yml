@@ -15,7 +15,8 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - run: |
           cd qemu-test && \
-          nix-shell --run 'just switch-to-esp32s3 && just build && just run-with-timeout 10 | grep -C999 "loop: 2"'
+          nix-shell --run 'just switch-to-esp32s3 && just build && just run-with-timeout 10 | grep -C999 "loop: 2"' && \
+          nix develop --command bash -c 'just switch-to-esp32s3 && just build && just run-with-timeout 10 | grep -C999 "loop: 2"'
   
   qemu-esp32s3-macos-build:
     runs-on: macos-latest
@@ -24,5 +25,6 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - run: |
           cd qemu-test && \
-          nix-shell --run 'just switch-to-esp32s3 && just build'
+          nix-shell --run 'just switch-to-esp32s3 && just build' && \
+          nix develop --command bash -c 'just switch-to-esp32s3 && just build'
                 

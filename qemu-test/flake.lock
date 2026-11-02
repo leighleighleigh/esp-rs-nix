@@ -1,0 +1,88 @@
+{
+  "nodes": {
+    "esp-rs": {
+      "inputs": {
+        "esp-rs-src": "esp-rs-src",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "path": "../",
+        "type": "path"
+      },
+      "original": {
+        "path": "../",
+        "type": "path"
+      },
+      "parent": []
+    },
+    "esp-rs-src": {
+      "flake": false,
+      "locked": {
+        "path": "./",
+        "type": "path"
+      },
+      "original": {
+        "path": "./",
+        "type": "path"
+      },
+      "parent": [
+        "esp-rs"
+      ]
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1793494649,
+        "narHash": "sha256-gh035dq/sQ/OwPltGyvjNl1zNWZgVnng2zug7xKqSu8=",
+        "rev": "d357a2b54f0b6dc4aeb4e993190a52cf151b6f24",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1106208.d357a2b54f0b/nixexprs.tar.zst"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1793494649,
+        "narHash": "sha256-gh035dq/sQ/OwPltGyvjNl1zNWZgVnng2zug7xKqSu8=",
+        "rev": "d357a2b54f0b6dc4aeb4e993190a52cf151b6f24",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1106208.d357a2b54f0b/nixexprs.tar.zst"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "qemu-espressif": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788971700,
+        "narHash": "sha256-PpB0gT0BidkWPV/IiONF5zC4H2oTCo8R8nGVyHNJC6c=",
+        "ref": "refs/heads/master",
+        "rev": "5b177eda12f09c230a03fe91de6ea18be17a1594",
+        "revCount": 186,
+        "type": "git",
+        "url": "https://gitlab.com/SFrijters/nix-qemu-espressif"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.com/SFrijters/nix-qemu-espressif"
+      }
+    },
+    "root": {
+      "inputs": {
+        "esp-rs": "esp-rs",
+        "nixpkgs": "nixpkgs_2",
+        "qemu-espressif": "qemu-espressif"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
