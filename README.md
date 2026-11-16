@@ -44,6 +44,7 @@ I will update these defaults periodically, to maintain compatibility with the `m
 
 | Release Date | rust-build (rustc) |   crosstool-NG (gcc)    |       binutils (gdb)        |
 | :----------: | :----------------: | :---------------------: | :-------------------------: |
+|  2026-11-10  |     v1.100.0.0     |                         |                             |
 |  2026-08-20  |     v1.98.0.0      |                         |                             |
 |  2026-07-08  |     v1.97.0.0      |                         |                             |
 |  2026-06-09  |                    | **esp-16.1.0_20260609** |                             |
